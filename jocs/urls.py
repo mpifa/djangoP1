@@ -12,7 +12,7 @@ urlpatterns = patterns('',
     url(r'^user/(\w+)/$', userpage),
     url(r'^login/$','django.contrib.auth.views.login'),
     url(r'^companys$',mainpage),
-    url(r'^jocs$',userpage),
+    url(r'^games$',userpage),
     url(r'^plataformes$',mainpage),
     #url(r'^jocs/', include('jocs.foo.urls')),
 

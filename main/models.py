@@ -4,33 +4,48 @@ from django.db import models
 
 class Company(models.Model):
     setUp = models.DateTimeField()
-    name = models.TextField(max_length=100,unique=True)
+    name = models.TextField(max_length=100,unique=True,primary_key=True)
     def __unicode__(self):
         return self.name
 
 class Platform(models.Model):
     releaseDate = models.DateTimeField()
-    name = models.TextField(max_length=100,unique=True)
-    company = models.ForeignKey(Company)
-    #company = models.TextField(max_length=100)
+    name = models.TextField(max_length=100,unique=True,primary_key=True)
     def __unicode__(self):
         return self.name
 
+class Made(models.Model):
+    company = models.ForeignKey(Company)
+    platform = models.ForeignKey(Platform)
+    def __unicode__(self):
+        return str(self.platform)+" made by "+str(self.company)
+#------------------------------------------------------------------
+
+class Game(models.Model):
+    releaseDate = models.DateTimeField()
+    name = models.TextField(max_length=100,unique=True,primary_key=True)
+    publisher = models.ForeignKey(Company,unique=True)
+    def __unicode__(self):
+        return self.name+" | "+str(self.publisher)
+
+class SupportedBy(models.Model):
+    game=models.ForeignKey(Game)
+    platform=models.ForeignKey(Platform)
+    def __unicode__(self):
+        return str(self.game)+" Platform: "+str(self.platform)
+    
 class Type(models.Model):
     Types=(
-        ('Action','Act'),('Adventure','Adv'),('Simulation','Sim'),
-        ('Sports','Spt'),('Driving','Drv'),('Strategy','Str'),('MMO','MMO'),
+        ('Action','Action'),('Adventure','Adventure'),('Simulation','Simulation'),
+        ('Sports','Sports'),('Driving','Driving'),('Strategy','Strategy'),('MMO','MMO'),
         ('Role','Role')
         )
-    name = models.CharField(max_length=15,choices=Types,unique=True)
+    name = models.CharField(max_length=15,choices=Types,unique=True,primary_key=True)
     def __unicode__(self):
         return self.name
 
-class Joc(models.Model):
-    releaseDate = models.DateTimeField()
-    name = models.TextField(max_length=100,unique=True)
-    platform= models.ManyToManyField(Platform)
-    company = models.ForeignKey(Company)
-    types = models.ManyToManyField(Type)
+class BelongsTo(models.Model):
+    game = models.ForeignKey(Game)
+    Type = models.ForeignKey(Type)
     def __unicode__(self):
-        return self.name+" | "+self.company.name+" | "+self.gender
+        return str(self.game)+" TYPE: "+str(self.Type)
