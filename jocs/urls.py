@@ -11,9 +11,14 @@ urlpatterns = patterns('',
     url(r'^$', mainpage, name='home'),
     url(r'^user/(\w+)/$', userpage),
     url(r'^login/$','django.contrib.auth.views.login'),
-    url(r'^companys$',mainpage),
-    url(r'^games$',userpage),
-    url(r'^plataformes$',mainpage),
+    url(r'^pc$','main.views.pc'),
+    url(r'^ps3$','main.views.ps3'),
+    url(r'^xbox360$','main.views.xbox360'),
+    url(r'^wii$','main.views.wii'),
+    url(r'^vita$','main.views.vita'),
+    url(r'^n3ds$','main.views.n3ds'),
+    url(r'^mobile$','main.views.mobile'),
+
     #url(r'^jocs/', include('jocs.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
@@ -21,4 +26,5 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
-)
+    url(r'^login/$','django.contrib.auth.views.login'),
+    url(r'^logout/$','main.views.logout'))

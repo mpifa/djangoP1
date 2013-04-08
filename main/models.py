@@ -19,14 +19,13 @@ class Made(models.Model):
     platform = models.ForeignKey(Platform)
     def __unicode__(self):
         return str(self.platform)+" made by "+str(self.company)
-#------------------------------------------------------------------
 
 class Game(models.Model):
     releaseDate = models.DateTimeField()
     name = models.TextField(max_length=100,unique=True,primary_key=True)
     publisher = models.ForeignKey(Company,unique=True)
     def __unicode__(self):
-        return self.name+" | "+str(self.publisher)
+        return self.name
 
 class SupportedBy(models.Model):
     game=models.ForeignKey(Game)
