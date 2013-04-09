@@ -18,7 +18,7 @@ class Made(models.Model):
     company = models.ForeignKey(Company)
     platform = models.ForeignKey(Platform)
     def __unicode__(self):
-        return str(self.platform)+" made by "+str(self.company)
+        return str(self.platform.name)
 
 class Game(models.Model):
     releaseDate = models.DateTimeField()
@@ -31,7 +31,7 @@ class SupportedBy(models.Model):
     game=models.ForeignKey(Game)
     platform=models.ForeignKey(Platform)
     def __unicode__(self):
-        return str(self.game)+" Platform: "+str(self.platform)
+        return str(self.game.name)
     
 class Type(models.Model):
     Types=(
@@ -47,4 +47,4 @@ class BelongsTo(models.Model):
     game = models.ForeignKey(Game)
     Type = models.ForeignKey(Type)
     def __unicode__(self):
-        return str(self.game)+" TYPE: "+str(self.Type)
+        return str(self.game)

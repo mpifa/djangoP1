@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+{% load staticfiles %}
+<title>GAME DATABASE</title>
+<link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}" />
+</head>
+<body>
+    
+<div id="wrap">
+    <div class="header">
+        <div class="logo"></div> 
+    <div id="menu">
+        <ul> 
+            <li class="selected"><a href="/">Home</a></li>
+            <li class="divider"></li>
+            <li class="selected"><a href="/pc">PC</a></li>
+            <li class="divider"></li>
+            <li class="selected"><a href="/xbox360">XBOX360</a></li>
+            <li class="divider"></li>
+            <li class="selected"><a href="/ps3">PS3</a></li>
+            <li class="divider"></li>
+            <li class="selected"><a href="/wii">Wii</a></li>
+            <li class="divider"></li>
+            <li class="selected"><a href="/vita">VITA</a></li>
+            <li class="divider"></li>
+            <li class="selected"><a href="n3ds">3DS</a></li>
+            <li class="divider"></li>
+            <li class="selected"><a href="mobile">MOBILE</a></li>
+            <li class="divider"></li>
+            <li class="selected"><a href="/admin">ADMIN</a></li>
+            <li class="divider"></li>
+            <li class="selected">{% if user.is_authenticated %}
+        <a href="/logout/">Logout</a>
+        {%else%}
+        <a href="/login">Log in</a>
+        {% endif %}</li>
+        </ul>
+    </div> 
+    
+    
+ 
+    
+    
+    <div class="center_content">
+
+            {% block content %}{% endblock %}
+    </div>
+    </div>
+</div><!--end Wrap-->
+        <div class="bottom_content">
+
+    </div>
+</body>
+</html>

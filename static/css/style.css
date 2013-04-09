@@ -1,0 +1,116 @@
+body
+{
+background-color:#393939;
+font-family:Arial, Helvetica, sans-serif;
+padding:0;
+font-size:12px;
+margin:0px auto auto auto;
+color:#000000;
+}
+a{
+color:#993a4e;
+}
+.clear{
+clear:both;
+}
+p{
+padding:5px 0 5px 0;
+margin:0px;
+text-align:justify;
+line-height:19px;
+}
+#wrap{
+    width: 899px;
+    height: auto;
+    margin: auto;
+    background-color:#FFFFFF;
+}
+.header{
+    width: 900px;
+    height: auto;
+    margin: auto;
+    background: url(/static/images/banner.gif) no-repeat center;
+}
+.logo{
+    padding: 55px 0 0 322px;
+}
+
+#menu{
+    width:899px;
+    height: 37px;
+    float: left;
+    padding: 0px;
+    margin: 30px 0 30 150px;
+    _margin: 30px 0 0 80px;
+    background:url(/static/images/menu_bg.gif) no-repeat center center;
+}
+#menu ul{
+    display: block;
+    list-style: none;
+    padding: 0px 0 0 10px;
+    margin: 0px;
+}
+
+#menu ul li{
+    display: inline;
+    padding: 0px;
+    margin: 0px;
+    height: 0px;
+}
+#menu ul li a{
+    height:37px;
+    display:block;
+    padding:0px 5px 0 5px;
+    margin:0 4px 0 4px;
+    _margin:0 2px 0 2px;
+    float:left;
+    text-decoration:none;
+    text-align:center;
+    color:#504d4b;
+    font-size:13px;
+    line-height:37px;
+}
+#menu ul li.selected a{
+    height:37px;
+    display:block;
+    padding:0px 5px 0 5px;
+    margin:0 5px 0 5px;
+    float:left;
+    text-decoration:underline;
+    text-align:center;
+    color:#504d4b;
+    font-size:13px;
+    line-height:37px;
+}
+#menu ul li.divider{
+    height:37px;
+    width:2px;
+    display:block;
+    padding:0px 7px 0 6px;
+    margin:0 5px 0 5px;
+    float:left;
+    background:url(/static/images/divider.gif) no-repeat center top;
+}
+
+.center_content{
+    width: 900px;
+    padding: 0px 0 0 0;
+    text-indent: 3em;
+    float: left;
+    background: url(/static/images/center_bg.gif) no-repeat center top;
+    background-color: #FFFFFF;
+}
+.left_content{
+    width: 490px;
+    float: left;
+    padding: 20px 0 20px 20px;
+}
+
+.right_content{
+    width: 370px;
+    float: right;
+    padding: 20px 0 20px 20px;
+}
+.bottom_content{
+    background: url(/static/images/center_bg2.gif) no-repeat center bottom;
+}

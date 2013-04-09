@@ -18,6 +18,14 @@ urlpatterns = patterns('',
     url(r'^vita$','main.views.vita'),
     url(r'^n3ds$','main.views.n3ds'),
     url(r'^mobile$','main.views.mobile'),
+    #Elems
+    url(r'^pc$','main.views.pc'),
+    url(r'^ps3$','main.views.ps3'),
+    url(r'^xbox360$','main.views.xbox360'),
+    url(r'^wii$','main.views.wii'),
+    url(r'^vita$','main.views.vita'),
+    url(r'^n3ds$','main.views.n3ds'),
+    url(r'^mobile$','main.views.mobile'),
 
     #url(r'^jocs/', include('jocs.foo.urls')),
 

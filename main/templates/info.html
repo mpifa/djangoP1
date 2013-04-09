@@ -1,0 +1,12 @@
+{% extends "main.html" %}
+
+    {% block content %}
+        </p>
+        <p>{{Title}}</p>
+        {% for item in result%}
+        <p><a href=/{{TYPE}}/{{item|urlencode}}>{{item}}</a></p>
+        {% empty %}
+        <li> No elements added yet.</li>
+        {% endfor %}
+
+    {% endblock %}
