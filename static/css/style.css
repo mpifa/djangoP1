@@ -93,8 +93,9 @@ line-height:19px;
 }
 
 .center_content{
-    width: 900px;
+    width: 899px;
     padding: 0px 0 0 0;
+    margin: 0px;
     text-indent: 3em;
     float: left;
     background: url(/static/images/center_bg.gif) no-repeat center top;
@@ -104,13 +105,18 @@ line-height:19px;
     width: 490px;
     float: left;
     padding: 20px 0 20px 20px;
+    margin: 0px;
+}
+.clear{
+    clear: both;
+    background: url(/static/images/center_bg2.gif) no-repeat center bottom;
+    margin: 0px;
+
 }
 
 .right_content{
     width: 370px;
     float: right;
     padding: 20px 0 20px 20px;
-}
-.bottom_content{
-    background: url(/static/images/center_bg2.gif) no-repeat center bottom;
+    margin: 0px;
 }
