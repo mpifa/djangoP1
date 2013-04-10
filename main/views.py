@@ -113,17 +113,22 @@ def gameDetails(request,ref):
     
     template = get_template('details.html')
     gameInfo = SupportedBy.objects.all().filter(game=ref)
-    Types = BelongsTo.objects.all().filter(game=ref)
-    Publisher = Game.objects.all().filter(name=ref)
+    Types = BelongsTo.objects.filter(game=ref)
+    Publisher = Game.objects.get(name=ref)
+    
+    for item in gameInfo:
+        elem = [item.game.name]
+    types = [str(t.Type.name) for t in Types]
+    plat = [str(p.platform.name) for p in gameInfo]
     
     
     variables = Context({
         'titleHead': 'GamesDB',
-        'pageTitle': 'Characteristics of '+str(gameInfo),
-        'date': Publisher,
-        'type':Types ,
-        'platform':gameInfo,
-        'company': Publisher,
+        'pageTitle': 'Characteristics of '+elem[0],
+        'date': Publisher.releaseDate,
+        'type':types ,
+        'platform':plat,
+        'company': Publisher.publisher.name,
         'user': request.user,
     })
     return render_to_response('details.html',variables)

@@ -2,15 +2,12 @@
 
     {% block content %}
         <p></p>
-        ARREGLAAR!
-        <h1>{{pageTitle.game.name}}</h1>
-        <div id='container'>
-            <div id='float'>
-            <p>DATE: {{date.game.releaseDate}}</p>
-            <p>TYPE: {{type.game.name}}</p>
-            <p>PLATFORM: {{platform.platform.name}}</p>
-            <p>PUBLISHER: {{company.company.game.publisher.name}}</p>
-            </div>
-        </div>
+        <h1>{{pageTitle}}</h1>
+            <p>DATE: &nbsp{{date}}</p>
+            
+            <p>TYPE:&nbsp{%for t in type%}{{t}}&nbsp{%endfor%}</p>
+            <p>PLATFORM:&nbsp{%for p in platform%}{{p}}&nbsp{%endfor%}</p>
+            <p>PUBLISHER:&nbsp {{company}}</p>
+            <p></p>
 
     {% endblock %}
