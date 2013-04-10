@@ -23,12 +23,14 @@ line-height:19px;
     width: 899px;
     height: auto;
     margin: auto;
-    background-color:#FFFFFF;
+    background-color: #393939; 
 }
 .header{
     width: 900px;
     height: auto;
     margin: auto;
+    border-radius: 3px;
+    background-color: #393939; 
     background: url(/static/images/banner.gif) no-repeat center;
 }
 .logo{
@@ -42,6 +44,7 @@ line-height:19px;
     padding: 0px;
     margin: 30px 0 30 150px;
     _margin: 30px 0 0 80px;
+    border-radius: 8px;
     background:url(/static/images/menu_bg.gif) no-repeat center center;
 }
 #menu ul{

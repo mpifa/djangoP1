@@ -1,0 +1,22 @@
+{% extends "main.html" %}
+
+    {% block contents %}
+        <div class=left_content>
+          {% if form.has_errors %}
+            <p>Error on log in.</p>
+          {% endif %}
+          
+        <form method="POST" action=".">
+        <p><label for="id_username"> User:&nbsp;</label>{{ form.username }}</p>
+        <p><label for="id_password"> Pass:&nbsp;</label>{{ form.password }}</p>
+        <input type="hidden" name="next" value="/"/>
+        <input type="submit" value="login"/>
+        
+          <div align="center">
+          </div>
+                  {% csrf_token %}
+
+        </form>
+    </div>
+        
+  {% endblock %}

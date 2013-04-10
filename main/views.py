@@ -11,40 +11,43 @@ from datetime import datetime
 from main import *
 
 
+
+
 def mainpage(request):
     template = get_template('main.html')
-    variables = Context({
+    variables = {
         'titleHead': 'GAMES DATA BASE',
-        'pagetitle': 'Welcome to a GamesDB',
-        'contentbody': "",
+        'pagetitle': 'Welcome to the GamesDB',
+        'txt':'',
         'user': request.user,
-        })
-    output = template.render(variables)
-    return HttpResponse(output)
+        }
+    return render_to_response('main.html',variables)
+
 
 def pc(request):
     template = get_template('info.html')
-    collection = SupportedBy.objects.all().filter(platform='PC')
+    collection = SupportedBy.objects.filter(platform='PC')   
     variables =Context({
         'Title':"List of PC Games",
         'TYPE':'pc',
-        'NAME': '',
-        'result': collection,        
+        'result': collection,
+        'user': request.user,
+        
     })
-    output = template.render(variables)
-    return HttpResponse(output)
+    return render_to_response('info.html',variables)
 
-def xbox360(reques):
+
+def xbox360(request):
     template = get_template('info.html')
     collection = SupportedBy.objects.all().filter(platform='Xbox 360')
     variables =Context({
         'Title':"List of Xbox 360 Games",
         'TYPE':'xbox360',
-        'NAME':'',
-        'result': collection,        
+        'result': collection,
+        'user': request.user,
     })
-    output = template.render(variables)
-    return HttpResponse(output)
+    return render_to_response('info.html',variables)
+
 
 def ps3(request):
     template = get_template('info.html')
@@ -52,11 +55,10 @@ def ps3(request):
     variables =Context({
         'Title':"List of PlayStation 3 Games",
         'TYPE':'ps3',
-        'NAME':'',
-        'result': collection,        
+        'result': collection,
+        'user': request.user,
     })
-    output = template.render(variables)
-    return HttpResponse(output)
+    return render_to_response('info.html',variables)
 
 def wii(request):
     template = get_template('info.html')
@@ -64,11 +66,10 @@ def wii(request):
     variables =Context({
         'Title':"List of Wii Games",
         'TYPE':'wii',
-        'NAME':'',
-        'result': collection,        
+        'result': collection,
+        'user': request.user,
     })
-    output = template.render(variables)
-    return HttpResponse(output)
+    return render_to_response('info.html',variables)
 
 def vita(request):
     template = get_template('info.html')
@@ -76,11 +77,10 @@ def vita(request):
     variables =Context({
         'Title':"List of Play Station Portable Vita Games",
         'TYPE':'vita',
-        'NAME':'',
-        'result': collection,        
+        'result': collection,
+        'user': request.user,
     })
-    output = template.render(variables)
-    return HttpResponse(output)
+    return render_to_response('info.html',variables)
 
 def n3ds(request):
     template = get_template('info.html')
@@ -88,11 +88,10 @@ def n3ds(request):
     variables =Context({
         'Title':"List of Nintendo 3DS Games",
         'TYPE':'n3ds',
-        'NAME':'',
-        'result': collection,        
+        'result': collection,
+        'user': request.user,
     })
-    output = template.render(variables)
-    return HttpResponse(output)
+    return render_to_response('info.html',variables)
 
 def mobile(request):
     template = get_template('info.html')
@@ -100,32 +99,44 @@ def mobile(request):
     variables =Context({
         'Title':"List of Mobile Games",
         'TYPE':'mobile',
-        'NAME':'',
-        'result': collection,        
+        'result': collection,
+        'user': request.user,
     })
-    output = template.render(variables)
-    return HttpResponse(output)
+    return render_to_response('info.html',variables)
+
 
 def gameDetails(request,ref):
+    #template = get_template('details.html')
+    #gameInfo = SupportedBy.objects.get(game=ref)
+    #Types = BelongsTo.objects.get(game=ref)
+    #Publisher = Game.objects.get(name=ref)
+    
     template = get_template('details.html')
-    gameInfo = SupportedBy.objects.get(game=ref)
-    Types = BelongsTo.objects.get(game=ref)
-    Publisher = Game.objects.get(name=ref)
+    gameInfo = SupportedBy.objects.all().filter(game=ref)
+    Types = BelongsTo.objects.all().filter(game=ref)
+    Publisher = Game.objects.all().filter(name=ref)
+    
     
     variables = Context({
         'titleHead': 'GamesDB',
-        'pageTitle': 'Characteristics of '+str(gameInfo.game),
-        'date': Publisher.releaseDate,
-        'type':Types.Type ,
-        'platform':gameInfo.platform,
-        'company': Publisher.publisher,
+        'pageTitle': 'Characteristics of '+str(gameInfo),
+        'date': Publisher,
+        'type':Types ,
+        'platform':gameInfo,
+        'company': Publisher,
+        'user': request.user,
+    })
+    return render_to_response('details.html',variables)
+
+def userpage(request,username):
+    try:
+        user=User.objects.get(username=username)
+    except:
+        raise Http404('User not foun.')
+    template = get_template('log.html')
+    variables = Context({
+        'username': username,
     })
     output = template.render(variables)
     return HttpResponse(output)
-    
-def logout(request):
-    logout(request)
-    param = { 'titlehead' : "Log out",
-            'state': ""}
-    return render_to_response('main.html',param)
 
