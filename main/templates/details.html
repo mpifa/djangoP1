@@ -5,9 +5,9 @@
         <h1>{{pageTitle}}</h1>
             <p>DATE: &nbsp{{date}}</p>
             
-            <p>TYPE:&nbsp{%for t in type%}{{t}}&nbsp{%endfor%}</p>
+            <p>TYPE:&nbsp{%for t in type%}<a href=/type/{{t}}>{{t}}</a>&nbsp{%endfor%}</p>
             <p>PLATFORM:&nbsp{%for p in platform%}{{p}}&nbsp{%endfor%}</p>
-            <p>PUBLISHER:&nbsp {{company}}</p>
+            <p>PUBLISHER:&nbsp <a href=/company/{{company|urlencode}}>{{company}}</a></p>
             <p></p>
 
     {% endblock %}
