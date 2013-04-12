@@ -15,6 +15,9 @@ from main import *
 
 
 def mainpage(request):
+    '''
+    This function contains the main template as initial website
+    '''
     template = get_template('main.html')
     variables = {
         'titleHead': 'GAMES DATA BASE',
@@ -26,6 +29,9 @@ def mainpage(request):
 
 
 def pc(request):
+    '''
+    This function contains all the games bases on the platform
+    '''
     template = get_template('info.html')
     tmp='PC'
     try:
@@ -47,6 +53,9 @@ def pc(request):
 
 
 def xbox360(request):
+    '''
+    This function contains all the games bases on the platform
+    '''
     template = get_template('info.html')
     tmp='Xbox 360'
     try:
@@ -67,6 +76,9 @@ def xbox360(request):
 
 
 def ps3(request):
+    '''
+    This function contains all the games bases on the platform
+    '''
     template = get_template('info.html')
     tmp='PlayStation 3'
     try:
@@ -87,6 +99,9 @@ def ps3(request):
     return render_to_response('info.html',variables)
 
 def wii(request):
+    '''
+    This function contains all the games bases on the platform
+    '''
     template = get_template('info.html')
     tmp='Wii'
     try:
@@ -107,6 +122,9 @@ def wii(request):
     return render_to_response('info.html',variables)
 
 def vita(request):
+    '''
+    This function contains all the games bases on the platform
+    '''
     template = get_template('info.html')
     tmp='PSP'
     try:
@@ -127,6 +145,9 @@ def vita(request):
     return render_to_response('info.html',variables)
 
 def n3ds(request):
+    '''
+    This function contains all the games bases on the platform
+    '''
     template = get_template('info.html')
     tmp='Nintendo DS'
     try:
@@ -147,6 +168,9 @@ def n3ds(request):
     return render_to_response('info.html',variables)
 
 def mobile(request):
+    '''
+    This function contains all the games bases on the platform
+    '''
     template = get_template('info.html')
     tmp='Mobile'
     try:
@@ -168,7 +192,11 @@ def mobile(request):
 
 
 
-def gameDetails(request,ref):   
+def gameDetails(request,ref):
+    '''
+    This function show the details of the Game selectes and the platform which
+    the belongs to
+    '''
     template = get_template('details.html')
     gameInfo = SupportedBy.objects.all().filter(game=ref)
     Types = BelongsTo.objects.filter(game=ref)
@@ -190,6 +218,9 @@ def gameDetails(request,ref):
     return render_to_response('details.html',variables)
 
 def gameByType(request,ref):
+    '''
+    This function shows all the games by type
+    '''
     Types = BelongsTo.objects.filter(Type=ref)   
     g=[]
     for t in Types:
@@ -204,6 +235,9 @@ def gameByType(request,ref):
     return render_to_response('details3.html',variables)
 
 def gameByCompany(request,ref):
+    '''
+    This function shows all the games by company
+    '''
     Company = Game.objects.filter(publisher=ref)
     g=[]
     for game in Company:
@@ -218,5 +252,8 @@ def gameByCompany(request,ref):
     return render_to_response('details3.html',variables)
 
 def Logout(request):
+    '''
+    This function logout the use and redirects him
+    '''
     logout(request)
     return redirect('/')

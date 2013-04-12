@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^$',mainpage),
     #url(r'^user/(\w+)/$', userpage),
     url(r'^login/$','django.contrib.auth.views.login'),
+    #PLATFORMS
     url(r'^PC$',pc),
     url(r'^PlayStation 3$',ps3),
     url(r'^Xbox 360$',xbox360),
@@ -20,7 +21,7 @@ urlpatterns = patterns('',
     url(r'^PSP$',vita),
     url(r'^Nintendo DS$',n3ds),
     url(r'^Mobile$',mobile),
-    #Elems
+    #GAME INFO
     url(r'^PC/([\w\s]+)$',gameDetails),
     url(r'^PlayStation 3/([\w\s]+)$',gameDetails),
     url(r'^Xbox 360/([\w\s]+)$',gameDetails),
@@ -29,6 +30,7 @@ urlpatterns = patterns('',
     url(r'^Nintendo DS/([\w\s]+)$',gameDetails),
     url(r'^Mobile/([\w\s]+)$',gameDetails),
     #url(r'^jocs/', include('jocs.foo.urls')),
+    #GAME BY 
     url(r'^company/([\w\s]+)$',gameByCompany),
     url(r'^type/([\w\s]+)$',gameByType),
 
