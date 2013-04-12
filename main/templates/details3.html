@@ -2,14 +2,13 @@
 
     {% block content %}
         </p>
-        <div class=left_content">
         <p><h2>{{Title}}</h2></p>
+
         {% for item in result %}
         <p>{{item}}
                 {% empty %}
         <li> No elements added yet.</li>
-        </div>
-        <div class=right_content">
+  +
         {% endfor %}
         <p></p>
             {% for type in TYPE%}
@@ -18,8 +17,6 @@
                 {%endfor%}
                 <p></p>
             {% endfor %}
-        </div>
-</div>
 
 
     {% endblock %}

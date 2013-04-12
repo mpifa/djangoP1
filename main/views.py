@@ -1,9 +1,9 @@
 # Create your views here.
 
 from django.http import HttpResponse
-from  django.shortcuts import render_to_response, get_object_or_404
+from  django.shortcuts import render_to_response, get_object_or_404,redirect
 from django.template import RequestContext
-
+from django.contrib.auth import logout
 from django.template import Context
 from django.template.loader import get_template
 from main.models import *
@@ -195,12 +195,17 @@ def gameByType(request,ref):
     Types = BelongsTo.objects.filter(Type=ref)
     
     g=[]
-    games=({})
+    games=[]
+    lst=[]
+    game=[]
     for t in Types:
         g.append(str(t.game.name))
-        for ts in g:
-            games=SupportedBy.objects.filter(game=ts)
-          
+    for ts in g:
+        lst=SupportedBy.objects.filter(game=ts)
+        game=[]
+        for x in lst:
+            game.append(x.platform.name)
+        games.append(game)
     #plat = SupportedBy.objects.filter(name='')
     variables=Context({
         'Title': 'All '+ref+' games',
@@ -210,7 +215,7 @@ def gameByType(request,ref):
 
         })
        
-    return render_to_response('details2.html',variables)
+    return render_to_response('details3.html',variables)
 
 def gameByCompany(request,ref):
     Company = Game.objects.filter(publisher=ref)
@@ -242,16 +247,6 @@ def gameByCompany(request,ref):
     
     return render_to_response('details3.html',variables)
 
-
-def userpage(request,username):
-    try:
-        user=User.objects.get(username=username)
-    except:
-        raise Http404('User not foun.')
-    template = get_template('log.html')
-    variables = Context({
-        'username': username,
-    })
-    output = template.render(variables)
-    return HttpResponse(output)
-
+def Logout(request):
+    logout(request)
+    return redirect('/login')

@@ -3,13 +3,15 @@ from django.conf.urls import patterns, include, url
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 from main.views import *
+from django.contrib.auth import logout
+from django.shortcuts import redirect
 
 admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
     url(r'^$',mainpage),
-    url(r'^user/(\w+)/$', userpage),
+    #url(r'^user/(\w+)/$', userpage),
     url(r'^login/$','django.contrib.auth.views.login'),
     url(r'^PC$',pc),
     url(r'^PlayStation 3$',ps3),
@@ -37,4 +39,4 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
     url(r'^login/$','django.contrib.auth.views.login'),
-    url(r'^logout/$','django.contrib.auth.views.logout'))
+    url(r'^logout/$',Logout))
