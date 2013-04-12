@@ -178,8 +178,6 @@ def gameDetails(request,ref):
         elem = [item.game.name]
     types = [str(t.Type.name) for t in Types]
     plat = [str(p.platform.name) for p in gameInfo]
-    
-    
     variables = Context({
         'titleHead': 'GamesDB',
         'pageTitle': 'Characteristics of '+elem[0],
@@ -192,24 +190,12 @@ def gameDetails(request,ref):
     return render_to_response('details.html',variables)
 
 def gameByType(request,ref):
-    Types = BelongsTo.objects.filter(Type=ref)
-    
+    Types = BelongsTo.objects.filter(Type=ref)   
     g=[]
-    games=[]
-    lst=[]
-    game=[]
     for t in Types:
         g.append(str(t.game.name))
-    for ts in g:
-        lst=SupportedBy.objects.filter(game=ts)
-        game=[]
-        for x in lst:
-            game.append(x.platform.name)
-        games.append(game)
-    #plat = SupportedBy.objects.filter(name='')
     variables=Context({
         'Title': 'All '+ref+' games',
-        'TYPE': games,
         'result': g,
         'user': request.user,
 
@@ -220,26 +206,10 @@ def gameByType(request,ref):
 def gameByCompany(request,ref):
     Company = Game.objects.filter(publisher=ref)
     g=[]
-    gl=({})
-    llista=[]
-    typelist=[]
-    llist=[]
     for game in Company:
         g.append(str(game.name))
-    for t in g:
-        gamelist=SupportedBy.objects.filter(game=t)
-        typelist=[]
-        for x in gamelist:
-            typelist.append(x.platform.name)
-        gl.update({x.game.name:typelist})
-        llist=[]
-        for i in gl.get(t):
-            llist.append(i)
-        llista.append(llist)
-    print llista
     variables=Context({
         'Title': 'All '+ref+' games',
-        'TYPE': llista,
         'result': g,
         'user': request.user,
 
@@ -249,4 +219,4 @@ def gameByCompany(request,ref):
 
 def Logout(request):
     logout(request)
-    return redirect('/login')
+    return redirect('/')

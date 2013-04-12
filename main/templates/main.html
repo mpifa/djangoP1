@@ -38,32 +38,25 @@
             <li class=selected"><a href="">Welcome {{ user }}</a></li>
         </ul>
     </div> 
-        </div>        
 
     
     
-    
+</div>
     <div class="center_content">
-    <p></p>
+    <p><h2>{{pagetitle}}</h2></p>
     
-             <h2>{{pagetitle}}</h2>
             {% if user.is_authenticated %}
                 {% block content %}{% endblock %}
-
             {%else%}
                <h3>PLEASE LOG IN TO SEE THE CONTENT ( Default User [user01: 123456] )</h3>
                                {% block contents %}{% endblock %}
-
             {% endif %}
 
     <p></p>
-    </div>
-    
+    </div>    
      <div class="clear">
         <p></p>
      </div>
 </div>
-
-
 </body>
 </html>

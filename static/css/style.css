@@ -110,6 +110,12 @@ line-height:19px;
     padding: 20px 0 20px 20px;
     margin: 0px;
 }
+.right_content{
+    width: 300px;
+    float: right;
+    padding: 0px 0px 0px 0px;
+    margin: 0px;
+}
 .clear{
     clear: both;
     background: url(/static/images/center_bg2.gif) no-repeat center bottom;
@@ -117,9 +123,3 @@ line-height:19px;
 
 }
 
-.right_content{
-    width: 370px;
-    float: right;
-    padding: 20px 0 20px 20px;
-    margin: 0px;
-}
