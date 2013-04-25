@@ -10,4 +10,13 @@
             <p>PUBLISHER:&nbsp <a href=/company/{{company|urlencode}}>{{company}}</a></p>
             <p></p>
 
-    {% endblock %}
+        {% block comments%}
+            <form action="/html/tags/html_form_tag_action.cfm" method="post">
+            Comments:<br />
+            <textarea name="comments" id="comments">
+            </textarea><br />
+            <input type="submit" value="Submit" />
+            </form>
+            
+            {%endblock comments%}
+    {% endblock content %}

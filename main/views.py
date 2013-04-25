@@ -48,7 +48,16 @@ def pc(request):
             'user': request.user,
         })
     except:
-        raise Http404
+        variables =Context({
+            'Title':'List of '+tmp+' Games',
+            'TYPE':'None',
+            'Date':'None',
+            'Made':'None',
+            'set':'None',
+            'result': '',
+            'user': request.user,
+        })
+        return render_to_response('info.html',variables)
     return render_to_response('info.html',variables)
 
 
@@ -71,7 +80,16 @@ def xbox360(request):
             'user': request.user,
         })
     except:
-        raise Http404
+        variables =Context({
+            'Title':'List of '+tmp+' Games',
+            'TYPE':'None',
+            'Date':'None',
+            'Made':'None',
+            'set':'None',
+            'result': '',
+            'user': request.user,
+        })
+        return render_to_response('info.html',variables)
     return render_to_response('info.html',variables)
 
 
@@ -95,7 +113,16 @@ def ps3(request):
             'user': request.user,
         })
     except:
-        raise Http404
+        variables =Context({
+            'Title':'List of '+tmp+' Games',
+            'TYPE':'None',
+            'Date':'None',
+            'Made':'None',
+            'set':'None',
+            'result': '',
+            'user': request.user,
+        })
+        return render_to_response('info.html',variables)
     return render_to_response('info.html',variables)
 
 def wii(request):
@@ -118,7 +145,16 @@ def wii(request):
             'user': request.user,
         })
     except:
-        raise Http404
+        variables =Context({
+            'Title':'List of '+tmp+' Games',
+            'TYPE':'None',
+            'Date':'None',
+            'Made':'None',
+            'set':'None',
+            'result': '',
+            'user': request.user,
+        })
+        return render_to_response('info.html',variables)
     return render_to_response('info.html',variables)
 
 def vita(request):
@@ -141,7 +177,16 @@ def vita(request):
             'user': request.user,
         })
     except:
-        raise Http404
+        variables =Context({
+            'Title':'List of '+tmp+' Games',
+            'TYPE':'None',
+            'Date':'None',
+            'Made':'None',
+            'set':'None',
+            'result': '',
+            'user': request.user,
+        })
+        return render_to_response('info.html',variables)
     return render_to_response('info.html',variables)
 
 def n3ds(request):
@@ -164,7 +209,16 @@ def n3ds(request):
             'user': request.user,
         })
     except:
-        raise Http404
+        variables =Context({
+            'Title':'List of '+tmp+' Games',
+            'TYPE':'None',
+            'Date':'None',
+            'Made':'None',
+            'set':'None',
+            'result': '',
+            'user': request.user,
+        })
+        return render_to_response('info.html',variables)
     return render_to_response('info.html',variables)
 
 def mobile(request):
@@ -186,69 +240,86 @@ def mobile(request):
             'result': collection,
             'user': request.user,
         })
+        def action():
+            return render_to_response('comments.html')
     except:
-        raise Http404
+        variables =Context({
+            'Title':'List of '+tmp+' Games',
+            'TYPE':'None',
+            'Date':'None',
+            'Made':'None',
+            'set':'None',
+            'result': '',
+            'user': request.user,
+        })
+        return render_to_response('info.html',variables)
     return render_to_response('info.html',variables)
 
 
 
-def gameDetails(request,ref):
+def gameDetails(request,pform,ref):
     '''
     This function show the details of the Game selectes and the platform which
     the belongs to
     '''
     template = get_template('details.html')
-    gameInfo = SupportedBy.objects.all().filter(game=ref)
+    gameInfo = SupportedBy.objects.all().filter(game=ref,platform=pform)
     Types = BelongsTo.objects.filter(game=ref)
     Publisher = Game.objects.get(name=ref)
-    
-    for item in gameInfo:
-        elem = [item.game.name]
-    types = [str(t.Type.name) for t in Types]
-    plat = [str(p.platform.name) for p in gameInfo]
-    variables = Context({
-        'titleHead': 'GamesDB',
-        'pageTitle': 'Characteristics of '+elem[0],
-        'date': Publisher.releaseDate,
-        'type':types ,
-        'platform':plat,
-        'company': Publisher.publisher.name,
-        'user': request.user,
-    })
+    try:    
+        for item in gameInfo:
+            elem = [item.game.name]
+        types = [str(t.Type.name) for t in Types]
+        plat = [str(p.platform.name) for p in gameInfo]
+        variables = Context({
+            'titleHead': 'GamesDB',
+            'pageTitle': 'Characteristics of '+elem[0],
+            'date': Publisher.releaseDate,
+            'type':types ,
+            'platform':plat,
+            'company': Publisher.publisher.name,
+            'user': request.user,
+        })
+    except:
+        raise Http404
     return render_to_response('details.html',variables)
 
 def gameByType(request,ref):
     '''
     This function shows all the games by type
     '''
-    Types = BelongsTo.objects.filter(Type=ref)   
-    g=[]
-    for t in Types:
-        g.append(str(t.game.name))
-    variables=Context({
-        'Title': 'All '+ref+' games',
-        'result': g,
-        'user': request.user,
-
-        })
-       
+    try:
+        Types = BelongsTo.objects.filter(Type=ref)   
+        g=[]
+        for t in Types:
+            g.append(str(t.game.name))
+        variables=Context({
+            'Title': 'All '+ref+' games',
+            'result': g,
+            'user': request.user,
+    
+            })
+    except:
+        raise Http404   
     return render_to_response('details3.html',variables)
 
 def gameByCompany(request,ref):
     '''
     This function shows all the games by company
     '''
-    Company = Game.objects.filter(publisher=ref)
-    g=[]
-    for game in Company:
-        g.append(str(game.name))
-    variables=Context({
-        'Title': 'All '+ref+' games',
-        'result': g,
-        'user': request.user,
-
-        })
+    try:    
+        Company = Game.objects.filter(publisher=ref)
+        g=[]
+        for game in Company:
+            g.append(str(game.name))
+        variables=Context({
+            'Title': 'All '+ref+' games',
+            'result': g,
+            'user': request.user,
     
+            })
+    except:
+        raise Http404
     return render_to_response('details3.html',variables)
 
 def Logout(request):

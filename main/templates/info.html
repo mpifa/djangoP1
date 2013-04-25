@@ -2,7 +2,6 @@
 
     {% block content %}
         </p>
-        
         <h2>{{Title}}</h2>
         <hr style="width: 275px; float: left; margin-left: 32px"><p>
             <p>Release Date: {{Date}} </p>
@@ -11,6 +10,7 @@
         {% for item in result %}
         <p><a href=/{{TYPE|urlencode}}/{{item.game.name|urlencode}}>{{item.game.name}}</a></p>
         {% empty %}
+        <p></p>
         <li> No elements added yet.</li>
     {% endfor %}
 

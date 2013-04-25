@@ -1,16 +1,26 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
+from datetime import date
 
 # Create your models here.
 
 class Company(models.Model):
     setUp = models.DateField()
-    name = models.TextField(max_length=100,unique=True,primary_key=True)
+    name = models.CharField(max_length=100,unique=True,primary_key=True)
+    #image = models.ImageField(upload_to='companies',blank=True)
+    
     def __unicode__(self):
         return self.name+'_'+str(self.setUp)
 
 class Platform(models.Model):
+    Types=(
+        ('PlayStation 3','PlayStation 3'),('Xbox 360','Xbox 360'),('PC','PC'),('Nintendo DS','Nintendo DS'),('Mobile','Mobile'),('PSP','PSP'),
+    )
     releaseDate = models.DateField()
-    name = models.TextField(max_length=100,unique=True,primary_key=True)
+    name = models.CharField(max_length=100,choices=Types,unique=True,primary_key=True)
+    #image = models.ImageField(upload_to='platforms',blank=True)
+
     def __unicode__(self):
         return self.name+'_'+str(self.releaseDate)
 
@@ -22,7 +32,7 @@ class Made(models.Model):
 
 class Game(models.Model):
     releaseDate = models.DateField()
-    name = models.TextField(max_length=100,unique=True,primary_key=True)
+    name = models.CharField(max_length=100,unique=True,primary_key=True)
     publisher = models.ForeignKey(Company)
     def __unicode__(self):
         return self.name+'_'+str(self.publisher)+'_'+str(self.releaseDate)
@@ -48,3 +58,14 @@ class BelongsTo(models.Model):
     Type = models.ForeignKey(Type)
     def __unicode__(self):
         return str(self.game)+'_'+str(self.Type)
+    
+#class Review(models.Model):
+#    RATING_CHOICES=((1,'one'),(2,'two'),(3,'three'),(4,'four'),(5,'five'))
+#    rating = models.PositiveSmallIntegerField('Rating(stars)',blank=False,default=3,choices=RATING_CHOICES)
+#    user = models.ForeignKey(User,default=User.objects.get(id=1))
+#    date = models.DateField(default=date.today)
+#    
+#class Reviews(models.Model):
+#    game = models.ForeignKey(Game)
+#    reviews = models.ForeignKey(Review)
+
