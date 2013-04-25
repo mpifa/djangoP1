@@ -50,14 +50,10 @@ def pc(request):
     except:
         variables =Context({
             'Title':'List of '+tmp+' Games',
-            'TYPE':'None',
-            'Date':'None',
-            'Made':'None',
-            'set':'None',
-            'result': '',
             'user': request.user,
+            'Message':'Games not added yet! ',
         })
-        return render_to_response('info.html',variables)
+        return render_to_response('http404.html',variables)
     return render_to_response('info.html',variables)
 
 
@@ -82,14 +78,11 @@ def xbox360(request):
     except:
         variables =Context({
             'Title':'List of '+tmp+' Games',
-            'TYPE':'None',
-            'Date':'None',
-            'Made':'None',
-            'set':'None',
-            'result': '',
             'user': request.user,
+            'Message':'Games not added yet! ',
         })
-        return render_to_response('info.html',variables)
+        return render_to_response('http404.html',variables)
+
     return render_to_response('info.html',variables)
 
 
@@ -115,14 +108,10 @@ def ps3(request):
     except:
         variables =Context({
             'Title':'List of '+tmp+' Games',
-            'TYPE':'None',
-            'Date':'None',
-            'Made':'None',
-            'set':'None',
-            'result': '',
             'user': request.user,
+            'Message':'Games not added yet! ',
         })
-        return render_to_response('info.html',variables)
+        return render_to_response('http404.html',variables)
     return render_to_response('info.html',variables)
 
 def wii(request):
@@ -147,14 +136,10 @@ def wii(request):
     except:
         variables =Context({
             'Title':'List of '+tmp+' Games',
-            'TYPE':'None',
-            'Date':'None',
-            'Made':'None',
-            'set':'None',
-            'result': '',
             'user': request.user,
+            'Message':'Games not added yet! ',
         })
-        return render_to_response('info.html',variables)
+        return render_to_response('http404.html',variables)
     return render_to_response('info.html',variables)
 
 def vita(request):
@@ -179,14 +164,10 @@ def vita(request):
     except:
         variables =Context({
             'Title':'List of '+tmp+' Games',
-            'TYPE':'None',
-            'Date':'None',
-            'Made':'None',
-            'set':'None',
-            'result': '',
+            'Message':'Games not added yet! ',
             'user': request.user,
         })
-        return render_to_response('info.html',variables)
+        return render_to_response('http404.html',variables)
     return render_to_response('info.html',variables)
 
 def n3ds(request):
@@ -211,14 +192,10 @@ def n3ds(request):
     except:
         variables =Context({
             'Title':'List of '+tmp+' Games',
-            'TYPE':'None',
-            'Date':'None',
-            'Made':'None',
-            'set':'None',
-            'result': '',
+            'Message':'Games not added yet! ',
             'user': request.user,
         })
-        return render_to_response('info.html',variables)
+        return render_to_response('http404.html',variables)
     return render_to_response('info.html',variables)
 
 def mobile(request):
@@ -245,14 +222,10 @@ def mobile(request):
     except:
         variables =Context({
             'Title':'List of '+tmp+' Games',
-            'TYPE':'None',
-            'Date':'None',
-            'Made':'None',
-            'set':'None',
-            'result': '',
+            'Message':'Games not added yet! ',
             'user': request.user,
         })
-        return render_to_response('info.html',variables)
+        return render_to_response('http404.html',variables)
     return render_to_response('info.html',variables)
 
 
@@ -274,6 +247,7 @@ def gameDetails(request,pform,ref):
         variables = Context({
             'titleHead': 'GamesDB',
             'pageTitle': 'Characteristics of '+elem[0],
+            'name':elem[0],
             'date': Publisher.releaseDate,
             'type':types ,
             'platform':plat,
@@ -281,7 +255,12 @@ def gameDetails(request,pform,ref):
             'user': request.user,
         })
     except:
-        raise Http404
+        variables = Context({
+            'titleHead': 'GamesDB',
+            'user': request.user,
+            'Message':'This requested Game does not exist!',
+        })
+        return render_to_response('http404.html',variables)
     return render_to_response('details.html',variables)
 
 def gameByType(request,ref):

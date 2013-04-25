@@ -9,14 +9,16 @@
             <p>PLATFORM:&nbsp{%for p in platform%}{{p}}&nbsp{%endfor%}</p>
             <p>PUBLISHER:&nbsp <a href=/company/{{company|urlencode}}>{{company}}</a></p>
             <p></p>
+            <hr style="width: 830px; float: left; margin-left: 32px">
 
         {% block comments%}
-            <form action="/html/tags/html_form_tag_action.cfm" method="post">
-            Comments:<br />
-            <textarea name="comments" id="comments">
-            </textarea><br />
-            <input type="submit" value="Submit" />
-            </form>
-            
+            <br> 
+            <div class="left_content">
+                <form action="/" method="post">
+                    Comments:<br>
+                    <textarea name="comments" id="comments"></textarea><br>
+                    <input type="submit" value="Submit" />
+                </form>
+            </div>
             {%endblock comments%}
     {% endblock content %}

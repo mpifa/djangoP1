@@ -47,7 +47,7 @@ class Type(models.Model):
     Types=(
         ('Action','Action'),('Adventure','Adventure'),('Simulation','Simulation'),
         ('Sports','Sports'),('Driving','Driving'),('Strategy','Strategy'),('MMO','MMO'),
-        ('Role','Role')
+        ('Role','Role'),('a','a')
         )
     name = models.CharField(max_length=15,choices=Types,unique=True,primary_key=True)
     def __unicode__(self):
@@ -59,13 +59,10 @@ class BelongsTo(models.Model):
     def __unicode__(self):
         return str(self.game)+'_'+str(self.Type)
     
-#class Review(models.Model):
-#    RATING_CHOICES=((1,'one'),(2,'two'),(3,'three'),(4,'four'),(5,'five'))
-#    rating = models.PositiveSmallIntegerField('Rating(stars)',blank=False,default=3,choices=RATING_CHOICES)
-#    user = models.ForeignKey(User,default=User.objects.get(id=1))
-#    date = models.DateField(default=date.today)
-#    
-#class Reviews(models.Model):
-#    game = models.ForeignKey(Game)
-#    reviews = models.ForeignKey(Review)
-
+class GameReview(models.Model):
+    RATING_CHOICES=((1,'one'),(2,'two'),(3,'three'),(4,'four'),(5,'five'))
+    rating = models.PositiveSmallIntegerField('Rating(stars)',blank=False,default=3,choices=RATING_CHOICES)
+    user = models.ForeignKey(User)
+    date = models.DateField(default=date.today)
+    Comment = models.CharField(max_length=255,blank=True)
+    game = models.ForeignKey(Game)
