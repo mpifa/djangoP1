@@ -64,5 +64,5 @@ class GameReview(models.Model):
     rating = models.PositiveSmallIntegerField('Rating(stars)',blank=False,default=3,choices=RATING_CHOICES)
     user = models.ForeignKey(User)
     date = models.DateField(default=date.today)
-    Comment = models.CharField(max_length=255,blank=True)
+    Comment = models.TextField(max_length=255,blank=True)
     game = models.ForeignKey(Game)

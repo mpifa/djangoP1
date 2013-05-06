@@ -22,7 +22,6 @@ def mainpage(request):
     variables = {
         'titleHead': 'GAMES DATA BASE',
         'pagetitle': 'Welcome to the GamesDB',
-        'txt':'',
         'user': request.user,
         }
     return render_to_response('main.html',variables)
