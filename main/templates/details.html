@@ -10,15 +10,20 @@
             <p>PUBLISHER:&nbsp <a href=/company/{{company|urlencode}}>{{company}}</a></p>
             <p></p>
             <hr style="width: 830px; float: left; margin-left: 32px">
+                <p><h3>{{COMMENTS}}</h3></p>
 
-        {% block comments%}
-            <br> 
-            <div class="left_content">
-                <form action="/" method="post">
-                    Comments:<br>
-                    <textarea name="comments" id="comments"></textarea><br>
-                    <input type="submit" value="Submit" />
-                </form>
-            </div>
-            {%endblock comments%}
+        {% for y,x in reviews.items %}
+            <p>#{{x.id}} {{x.user}} <p> {{x.Comment}} </p> <p>Rate: [{{x.rate}}]</p>
+            <FORM>
+                <INPUT VALUE= "EDIT" type="button" onClick="parent.location='/comment/edit{{path}}/{{x.id}}'">
+            </FORM>
+            <FORM>
+                <INPUT VALUE= "DELETE" type="button" onClick="parent.location='/comment/delete{{path}}/{{x.id}}'">
+            </FORM></p>
+            <hr style="width: 830px; float: left; margin-left: 32px">
+
+        {% endfor %}
+        <FORM>
+            <INPUT VALUE= "Comment" type="button" onClick="parent.location='/comment/add{{path}}'">
+        </FORM>
     {% endblock content %}

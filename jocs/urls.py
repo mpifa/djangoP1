@@ -23,12 +23,25 @@ urlpatterns = patterns('',
     url(r'^Mobile$',mobile),
 
     #GAME INFO
-    url(r'^([\w\s]+)/([\w\s]+)$',gameDetails),
+    url(r'^PC/([\w\s]+)$',gameDetails),
+    url(r'^PlayStation 3/([\w\s]+)$',gameDetails),
+    url(r'^Xbox 360/([\w\s]+)$',gameDetails),
+    url(r'^Wii/([\w\s]+)$',gameDetails),
+    url(r'^PSP/([\w\s]+)$',gameDetails),
+    url(r'^Nintendo DS/([\w\s]+)$',gameDetails),
+    url(r'^Mobile/([\w\s]+)$',gameDetails),
+    #url(r'^([\w\s]+)/([\w\s]+)$',gameDetails),
     #url(r'^jocs/', include('jocs.foo.urls')),
 
     #GAME BY 
     url(r'^company/([\w\s]+)$',gameByCompany),
     url(r'^type/([\w\s]+)$',gameByType),
+
+    #COMMENT
+    #url(r'^comment$/([\w\s]+)',Comment),
+    url(r'^comment/add/([\w\s]+)/([\w\s]+)$',AddComment),#Comentari
+    url(r'^comment/edit/([\w\s]+)/([\w\s]+)$',EditComment),
+    url(r'^comment/delete/([\w\s]+)/([\w\s]+)$',DeleteComment),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

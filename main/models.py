@@ -66,3 +66,4 @@ class GameReview(models.Model):
     date = models.DateField(default=date.today)
     Comment = models.TextField(max_length=255,blank=True)
     game = models.ForeignKey(Game)
+    #platform = models.ForeignKey(Platform)

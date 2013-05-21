@@ -9,10 +9,8 @@ from django.template.loader import get_template
 from main.models import *
 from datetime import datetime
 from django.http import Http404
+from django.contrib.auth.decorators import login_required
 from main import *
-
-
-
 
 def mainpage(request):
     '''
@@ -26,7 +24,7 @@ def mainpage(request):
         }
     return render_to_response('main.html',variables)
 
-
+@login_required(login_url='/login')
 def pc(request):
     '''
     This function contains all the games bases on the platform
@@ -55,7 +53,7 @@ def pc(request):
         return render_to_response('http404.html',variables)
     return render_to_response('info.html',variables)
 
-
+@login_required(login_url='/login')
 def xbox360(request):
     '''
     This function contains all the games bases on the platform
@@ -85,6 +83,7 @@ def xbox360(request):
     return render_to_response('info.html',variables)
 
 
+@login_required(login_url='/login')
 def ps3(request):
     '''
     This function contains all the games bases on the platform
@@ -113,6 +112,7 @@ def ps3(request):
         return render_to_response('http404.html',variables)
     return render_to_response('info.html',variables)
 
+@login_required(login_url='/login')
 def wii(request):
     '''
     This function contains all the games bases on the platform
@@ -141,6 +141,7 @@ def wii(request):
         return render_to_response('http404.html',variables)
     return render_to_response('info.html',variables)
 
+@login_required(login_url='/login')
 def vita(request):
     '''
     This function contains all the games bases on the platform
@@ -169,6 +170,7 @@ def vita(request):
         return render_to_response('http404.html',variables)
     return render_to_response('info.html',variables)
 
+@login_required(login_url='/login')
 def n3ds(request):
     '''
     This function contains all the games bases on the platform
@@ -197,6 +199,7 @@ def n3ds(request):
         return render_to_response('http404.html',variables)
     return render_to_response('info.html',variables)
 
+@login_required(login_url='/login')
 def mobile(request):
     '''
     This function contains all the games bases on the platform
@@ -229,45 +232,67 @@ def mobile(request):
 
 
 
-def gameDetails(request,pform,ref):
+@login_required(login_url='/login')
+def gameDetails(request,ref):
     '''
     This function show the details of the Game selectes and the platform which
     the belongs to
     '''
     template = get_template('details.html')
-    gameInfo = SupportedBy.objects.all().filter(game=ref,platform=pform)
+    gameInfo = SupportedBy.objects.all().filter(game=ref)
     Types = BelongsTo.objects.filter(game=ref)
     Publisher = Game.objects.get(name=ref)
-    try:    
-        for item in gameInfo:
-            elem = [item.game.name]
-        types = [str(t.Type.name) for t in Types]
-        plat = [str(p.platform.name) for p in gameInfo]
-        variables = Context({
-            'titleHead': 'GamesDB',
-            'pageTitle': 'Characteristics of '+elem[0],
-            'name':elem[0],
-            'date': Publisher.releaseDate,
-            'type':types ,
-            'platform':plat,
-            'company': Publisher.publisher.name,
-            'user': request.user,
+    Reviews = GameReview.objects.all().filter(game=ref)
+    
+
+    dic=({})
+    dic2=({})
+    cid=0
+    comments = {}    
+    #try:
+    for rv in Reviews:
+        cid=cid+1
+        dic2=({
+                'id': cid,
+                'user': str(rv.user),
+                'Comment':str(rv.Comment),
+                'rate':rv.rating,
+                })
+                
+        dic[str(cid)]=dic2
+    for item in gameInfo:
+        elem = [item.game.name]
+    types = [str(t.Type.name) for t in Types]
+    plat = [str(p.platform.name) for p in gameInfo]
+    variables = Context({
+        'titleHead': 'GamesDB',
+        'pageTitle': 'Characteristics of '+elem[0],
+        'name':elem[0],
+        'date': Publisher.releaseDate,
+        'type':types ,
+        'platform':plat,
+        'company': Publisher.publisher.name,
+        'user': request.user,
+        'COMMENTS':'COMMENTS',
+        'reviews':dic,
+        'path':request.path,
         })
-    except:
-        variables = Context({
-            'titleHead': 'GamesDB',
-            'user': request.user,
-            'Message':'This requested Game does not exist!',
-        })
-        return render_to_response('http404.html',variables)
+    #except:
+        #variables = Context({
+        #    'titleHead': 'GamesDB',
+        #    'user': request.user,
+        #    'Message':'This requested Game does not exist!',
+        #})
+        #return render_to_response('http404.html',variables)
     return render_to_response('details.html',variables)
 
+@login_required(login_url='/login')
 def gameByType(request,ref):
     '''
     This function shows all the games by type
     '''
     try:
-        Types = BelongsTo.objects.filter(Type=ref)   
+        Types = BelongsTo.objects.filter(Type=ref)
         g=[]
         for t in Types:
             g.append(str(t.game.name))
@@ -281,6 +306,7 @@ def gameByType(request,ref):
         raise Http404   
     return render_to_response('details3.html',variables)
 
+@login_required(login_url='/login')
 def gameByCompany(request,ref):
     '''
     This function shows all the games by company
@@ -300,9 +326,56 @@ def gameByCompany(request,ref):
         raise Http404
     return render_to_response('details3.html',variables)
 
+@login_required(login_url='/login')
 def Logout(request):
     '''
     This function logout the use and redirects him
     '''
     logout(request)
     return redirect('/')
+
+#def Comment(request,mode):
+#    '''
+#    Load comment template
+#    '''
+#    variables=Context({
+#        'user':request.user,
+#        'mode':mode,
+#    })
+#    return render_to_response('comment.html',variables)
+
+@login_required(login_url='/login')
+def AddComment(request,pform,ref):
+    '''
+    '''
+    user = request.user
+    variables=Context({
+        'user':request.user,
+        'mode':request.path.split("/")[:3]
+    })
+    return render_to_response('comment.html',variables)
+    #if request.method =='POST':
+    #    form = ReviewForm(request.POST)
+    #    if form.is_valid():
+    #        return HttpResponseRedirect('/thanks/')
+    #else:
+    #    form = ReviewForm()
+    #return render(request,'comment.html',{'form':form})
+
+def EditComment(request,pform,ref):
+    if request.method =='POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            return HttpResponseRedirect('/thanks/')
+    else:
+        form = ReviewForm()
+    return render(request,'comment.html',{'form':form})
+
+def DeleteComment(request,pform,ref):
+    if request.method =='POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            return HttpResponseRedirect('/thanks/')
+    else:
+        form = ReviewForm()
+    return render(request,'comment.html',{'form':form})

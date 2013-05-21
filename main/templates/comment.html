@@ -1,0 +1,17 @@
+{% extends "main.html"%}
+
+{%block content%}
+    <br> 
+    <div class="left_content">
+        <form action="/{{mode}}/{{elem}}" method="post">
+            Comment:<br>
+            <textarea name="comments" id="comments" cols=75 rows=6></textarea><br>
+            <input type="submit" value="Submit" onclick="parent.location='/comment/add{{path}}'">
+        {% csrf_token %}
+
+        </form>
+    </div>
+{%endblock content%}
+
+
+
