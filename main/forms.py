@@ -6,4 +6,4 @@ class addReviewForm(ModelForm):
         model=GameReview
 class editReviewForm(ModelForm):
     class Meta:
-        model=Gamereview
+        model=GameReview

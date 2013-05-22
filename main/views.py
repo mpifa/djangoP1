@@ -19,7 +19,7 @@ from main.models import *
 from datetime import datetime
 from main import *
 
-from forms import ReviewForm
+from forms import *
 from django import forms
 
 
@@ -370,13 +370,13 @@ def register(request):
 @login_required(login_url='/login')
 def AddComment(request,pform,ref):
     '''
+    Add a comment to a game
     '''
     user = request.user
-    path = request.path.split('/')
-    path = path[3]+'/'+path[4]
+    #path = request.path.split('/')
+    #path = path[3]+'/'+path[4]
+    path = pform+'/'+ref
     path2 = request.path
-    
-    print path2
     if request.method =='POST':
         form = addReviewForm(request.POST)
         if form.is_valid():
@@ -384,15 +384,14 @@ def AddComment(request,pform,ref):
             return HttpResponseRedirect('/'+path)
     else:
         form = addReviewForm()
-    return render(request,'comment.html',{'form':form,'path':path,'path2':path2})
+    return render(request,'comment.html',{'form':form,'path':path,'path2':path2,'action':'INSERT'})
 
-def EditComment(request,pform,ref):
+def EditComment(request,pform,ref,cid):
     user = request.user
-    path = request.path.split('/')
-    path = path[3]+'/'+path[4]
+    #path = request.path.split('/')
+    #path = path[3]+'/'+path[4]
+    path = pform+'/'+ref
     path2 = request.path
-    
-    print path2
     if request.method =='POST':
         form = editReviewForm(request.POST)
         if form.is_valid():
@@ -400,7 +399,7 @@ def EditComment(request,pform,ref):
             return HttpResponseRedirect('/'+path)
     else:
         form = editReviewForm()
-    return render(request,'comment.html',{'form':form,'path':path,'path2':path2})
+    return render(request,'comment.html',{'form':form,'path':path,'path2':path2,'action':'EDIT'})
 
 def DeleteComment(request,pform,ref):
     if request.method =='POST':

@@ -1,7 +1,7 @@
 {% extends "main.html"%}
 
 {%block content%}
-    <h2>INSERT COMMENT</h2>
+    <h2>{{action}} COMMENT</h2>
     <div class="left_content">
         <form action="{{path2}}" method="post">{% csrf_token%}
             {{form.as_p}}

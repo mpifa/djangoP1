@@ -40,7 +40,7 @@ urlpatterns = patterns('',
     #COMMENT
     #url(r'^comment$/([\w\s]+)',Comment),
     url(r'^comment/add/([\w\s]+)/([\w\s]+)$',AddComment),#Comentari
-    url(r'^comment/edit/([\w\s]+)/([\w\s]+)$',EditComment),
+    url(r'^comment/edit/([\w\s]+)/([\w\s]+)/([\w\s]+)$',EditComment),
     url(r'^comment/delete/([\w\s]+)/([\w\s]+)$',DeleteComment),
 
     # Uncomment the admin/doc line below to enable admin documentation:
