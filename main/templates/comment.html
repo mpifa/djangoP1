@@ -1,17 +1,16 @@
 {% extends "main.html"%}
 
 {%block content%}
-    <br> 
+    <h2>INSERT COMMENT</h2>
     <div class="left_content">
-        <form action="/{{mode}}/{{elem}}" method="post">
-            Comment:<br>
-            <textarea name="comments" id="comments" cols=75 rows=6></textarea><br>
-            <input type="submit" value="Submit" onclick="parent.location='/comment/add{{path}}'">
+        <form action="{{path2}}" method="post">{% csrf_token%}
+            {{form.as_p}}
+            <input type="submit" value="Submit">
         {% csrf_token %}
 
         </form>
     </div>
-{%endblock content%}
+{%endblock %}
 
 
 

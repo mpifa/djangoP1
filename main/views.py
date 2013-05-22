@@ -1,16 +1,27 @@
 # Create your views here.
 
 from django.http import HttpResponse
-from  django.shortcuts import render_to_response, get_object_or_404,redirect
+from django.http import Http404
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from django.shortcuts import render_to_response, get_object_or_404,redirect
 from django.template import RequestContext
-from django.contrib.auth import logout
 from django.template import Context
 from django.template.loader import get_template
+from django.contrib.auth import logout
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required
+
 from main.models import *
 from datetime import datetime
-from django.http import Http404
-from django.contrib.auth.decorators import login_required
 from main import *
+
+from forms import ReviewForm
+from django import forms
+
 
 def mainpage(request):
     '''
@@ -242,9 +253,10 @@ def gameDetails(request,ref):
     gameInfo = SupportedBy.objects.all().filter(game=ref)
     Types = BelongsTo.objects.filter(game=ref)
     Publisher = Game.objects.get(name=ref)
-    Reviews = GameReview.objects.all().filter(game=ref)
-    
-
+    #Reviews = GameReview.objects.all().filter(game=ref)
+    Gname = request.path.split('/')[2]
+    Reviews = GameReview.objects.all().filter(game=Gname)
+    print Reviews
     dic=({})
     dic2=({})
     cid=0
@@ -260,6 +272,7 @@ def gameDetails(request,ref):
                 })
                 
         dic[str(cid)]=dic2
+    print dic
     for item in gameInfo:
         elem = [item.game.name]
     types = [str(t.Type.name) for t in Types]
@@ -333,7 +346,17 @@ def Logout(request):
     '''
     logout(request)
     return redirect('/')
-
+def register(request):
+    '''
+    '''
+    if request.method=='POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid:
+            form.save()
+            return HttpResponseRedirect('/')
+    else:
+        form= UserCreationForm()
+    return render_to_response('registration.html',{'form':form},context_instance=RequestContext(request))
 #def Comment(request,mode):
 #    '''
 #    Load comment template
@@ -349,27 +372,35 @@ def AddComment(request,pform,ref):
     '''
     '''
     user = request.user
-    variables=Context({
-        'user':request.user,
-        'mode':request.path.split("/")[:3]
-    })
-    return render_to_response('comment.html',variables)
-    #if request.method =='POST':
-    #    form = ReviewForm(request.POST)
-    #    if form.is_valid():
-    #        return HttpResponseRedirect('/thanks/')
-    #else:
-    #    form = ReviewForm()
-    #return render(request,'comment.html',{'form':form})
+    path = request.path.split('/')
+    path = path[3]+'/'+path[4]
+    path2 = request.path
+    
+    print path2
+    if request.method =='POST':
+        form = addReviewForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/'+path)
+    else:
+        form = addReviewForm()
+    return render(request,'comment.html',{'form':form,'path':path,'path2':path2})
 
 def EditComment(request,pform,ref):
+    user = request.user
+    path = request.path.split('/')
+    path = path[3]+'/'+path[4]
+    path2 = request.path
+    
+    print path2
     if request.method =='POST':
-        form = ReviewForm(request.POST)
+        form = editReviewForm(request.POST)
         if form.is_valid():
-            return HttpResponseRedirect('/thanks/')
+            form.save()
+            return HttpResponseRedirect('/'+path)
     else:
-        form = ReviewForm()
-    return render(request,'comment.html',{'form':form})
+        form = editReviewForm()
+    return render(request,'comment.html',{'form':form,'path':path,'path2':path2})
 
 def DeleteComment(request,pform,ref):
     if request.method =='POST':

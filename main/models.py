@@ -11,7 +11,7 @@ class Company(models.Model):
     #image = models.ImageField(upload_to='companies',blank=True)
     
     def __unicode__(self):
-        return self.name+'_'+str(self.setUp)
+        return self.name
 
 class Platform(models.Model):
     Types=(
@@ -22,7 +22,7 @@ class Platform(models.Model):
     #image = models.ImageField(upload_to='platforms',blank=True)
 
     def __unicode__(self):
-        return self.name+'_'+str(self.releaseDate)
+        return self.name
 
 class Made(models.Model):
     company = models.ForeignKey(Company)
@@ -35,7 +35,7 @@ class Game(models.Model):
     name = models.CharField(max_length=100,unique=True,primary_key=True)
     publisher = models.ForeignKey(Company)
     def __unicode__(self):
-        return self.name+'_'+str(self.publisher)+'_'+str(self.releaseDate)
+        return self.name
 
 class SupportedBy(models.Model):
     game=models.ForeignKey(Game)
