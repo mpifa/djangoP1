@@ -253,15 +253,15 @@ def gameDetails(request,ref):
     gameInfo = SupportedBy.objects.all().filter(game=ref)
     Types = BelongsTo.objects.filter(game=ref)
     Publisher = Game.objects.get(name=ref)
-    #Reviews = GameReview.objects.all().filter(game=ref)
     Gname = request.path.split('/')[2]
-    Reviews = GameReview.objects.all().filter(game=Gname)
-    print Reviews
+    Reviews = GameReview.objects.all().filter(game=Gname).order_by('-date')
+
     dic=({})
     dic2=({})
     cid=0
     comments = {}    
     #try:
+    print Reviews
     for rv in Reviews:
         cid=cid+1
         dic2=({
@@ -269,13 +269,14 @@ def gameDetails(request,ref):
                 'user': str(rv.user),
                 'Comment':str(rv.Comment),
                 'rate':rv.rating,
+                'date':rv.date
                 })
                 
         dic[str(cid)]=dic2
     print dic
     for item in gameInfo:
         elem = [item.game.name]
-    types = [str(t.Type.name) for t in Types]
+    types = [str(t.Type) for t in Types]
     plat = [str(p.platform.name) for p in gameInfo]
     variables = Context({
         'titleHead': 'GamesDB',
@@ -286,17 +287,10 @@ def gameDetails(request,ref):
         'platform':plat,
         'company': Publisher.publisher.name,
         'user': request.user,
-        'COMMENTS':'COMMENTS',
+        'COMMENTS':'USERS REVIEWS',
         'reviews':dic,
         'path':request.path,
         })
-    #except:
-        #variables = Context({
-        #    'titleHead': 'GamesDB',
-        #    'user': request.user,
-        #    'Message':'This requested Game does not exist!',
-        #})
-        #return render_to_response('http404.html',variables)
     return render_to_response('details.html',variables)
 
 @login_required(login_url='/login')
@@ -356,16 +350,7 @@ def register(request):
             return HttpResponseRedirect('/')
     else:
         form= UserCreationForm()
-    return render_to_response('registration.html',{'form':form},context_instance=RequestContext(request))
-#def Comment(request,mode):
-#    '''
-#    Load comment template
-#    '''
-#    variables=Context({
-#        'user':request.user,
-#        'mode':mode,
-#    })
-#    return render_to_response('comment.html',variables)
+    return render_to_response('registration/register.html',{'form':form,'path':request.path},context_instance=RequestContext(request))
 
 @login_required(login_url='/login')
 def AddComment(request,pform,ref):
@@ -378,12 +363,12 @@ def AddComment(request,pform,ref):
     path = pform+'/'+ref
     path2 = request.path
     if request.method =='POST':
-        form = addReviewForm(request.POST)
+        form = addReviewForm(user,pform,ref,request.POST)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/'+path)
     else:
-        form = addReviewForm()
+        form = addReviewForm(user,pform,ref)
     return render(request,'comment.html',{'form':form,'path':path,'path2':path2,'action':'INSERT'})
 
 def EditComment(request,pform,ref,cid):

@@ -1,11 +1,12 @@
 {% extends "main.html"%}
 
 {%block content%}
-    <h2>{{action}} COMMENT</h2>
+    <h2>{{action}} REVIEW</h2>
     <div class="left_content">
         <form action="{{path2}}" method="post">{% csrf_token%}
-            {{form.as_p}}
+            {{form.as_p}}<p>
             <input type="submit" value="Submit">
+                </p>
         {% csrf_token %}
 
         </form>
