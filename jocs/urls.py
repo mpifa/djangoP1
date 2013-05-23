@@ -14,14 +14,14 @@ urlpatterns = patterns('',
     url(r'^login/$','django.contrib.auth.views.login'),
 
     #PLATFORMS
-    url(r'^PC$',pc),
-    url(r'^PlayStation 3$',ps3),
-    url(r'^Xbox 360$',xbox360),
-    url(r'^Wii$',wii),
-    url(r'^PSP$',vita),
-    url(r'^Nintendo DS$',n3ds),
-    url(r'^Mobile$',mobile),
-
+    url(r'^PC$',gamesByPlatform),
+    url(r'^PlayStation 3$',gamesByPlatform),
+    url(r'^Xbox 360$',gamesByPlatform),
+    url(r'^Wii$',gamesByPlatform),
+    url(r'^PSP$',gamesByPlatform),
+    url(r'^Nintendo DS$',gamesByPlatform),
+    url(r'^Mobile$',gamesByPlatform),
+    
     #GAME INFO
     url(r'^PC/([\w\s]+)$',gameDetails),
     url(r'^PlayStation 3/([\w\s]+)$',gameDetails),
@@ -39,9 +39,9 @@ urlpatterns = patterns('',
 
     #COMMENT
     #url(r'^comment$/([\w\s]+)',Comment),
-    url(r'^review/add/([\w\s]+)/([\w\s]+)$',AddComment),#Comentari
-    url(r'^review/edit/([\w\s]+)/([\w\s]+)/([\w\s]+)$',EditComment),
-    url(r'^review/delete/([\w\s]+)/([\w\s]+)/([\w\s]+)$',DeleteComment),
+    url(r'^review/add/([\w\s]+)/([\w\s]+)$',AddReview),#Comentari
+    url(r'^review/edit/([\w\s]+)/([\w\s]+)/([\w\s]+)$',EditReview),
+    url(r'^review/delete/([\w\s]+)/([\w\s]+)/([\w\s]+)$',DeleteReview),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

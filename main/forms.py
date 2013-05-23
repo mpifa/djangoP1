@@ -30,9 +30,8 @@ class editReviewForm(ModelForm):
         self.fields['platform'].empty_label= None
         self.fields['platform'].queryset = Platform.objects.filter(name=pform)
         
-        self.fields['rating'].empty_label = None
+        #self.fields['rating'].empty_label = None
         query =(GameReview.objects.get(pk=cid)).rating
-        self.fields['rating'].help_text = "Last rate : "+ str(query)
         
     class Meta:
         model=GameReview        

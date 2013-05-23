@@ -2,11 +2,29 @@
 
 {%block content%}
     <h2>{{action}} REVIEW</h2>
+    
+    {% if flag == 1%}
+        <hr style="width: 830px; float: left; margin-left: 32px">
+        <h2>Preview review</h2>
+        <p>rate: {{rate}}</p>
+        <p>Comment: {{review}}</p>
+        <p>Game: {{game}}</p>
+        <p>Platform: {{pform}}</p>
+        <hr style="width: 830px; float: left; margin-left: 32px">
+
+    {% endif %}    
+    
     <div class="left_content">
         <form action="{{path2}}" method="post">{% csrf_token%}
             {{form.as_p}}<p>
             <input type="submit" value="Submit">
                 </p>
+        {% csrf_token %}
+
+        </form>
+        
+         <form action="{{path2}}" method="post">
+            <input type="submit" value="Cancel">
         {% csrf_token %}
 
         </form>

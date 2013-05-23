@@ -17,14 +17,11 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import login_required
 from operator import itemgetter
-
 from main.models import *
 from datetime import datetime
 from main import *
-
 from forms import *
 from django import forms
-
 
 def mainpage(request):
     '''
@@ -39,12 +36,12 @@ def mainpage(request):
     return render_to_response('main.html',variables)
 
 @login_required(login_url='/login')
-def pc(request):
+def gamesByPlatform(request):
     '''
     This function contains all the games bases on the platform
     '''
     template = get_template('info.html')
-    tmp='PC'
+    tmp = request.path.split('/')[1]
     try:
         coll = Made.objects.get(platform=tmp)
         collection = SupportedBy.objects.all().filter(platform=tmp)
@@ -66,185 +63,6 @@ def pc(request):
         })
         return render_to_response('http404.html',variables)
     return render_to_response('info.html',variables)
-
-@login_required(login_url='/login')
-def xbox360(request):
-    '''
-    This function contains all the games bases on the platform
-    '''
-    template = get_template('info.html')
-    tmp='Xbox 360'
-    try:
-        coll = Made.objects.get(platform=tmp)
-        collection = SupportedBy.objects.all().filter(platform=tmp)
-        variables =Context({
-            'Title':'List of '+tmp+' Games',
-            'TYPE':tmp,
-            'Date': coll.platform.releaseDate,
-            'Made':coll.company.name,
-            'set':coll.company.setUp,
-            'result': collection,
-            'user': request.user,
-        })
-    except:
-        variables =Context({
-            'Title':'List of '+tmp+' Games',
-            'user': request.user,
-            'Message':'Games not added yet! ',
-        })
-        return render_to_response('http404.html',variables)
-
-    return render_to_response('info.html',variables)
-
-
-@login_required(login_url='/login')
-def ps3(request):
-    '''
-    This function contains all the games bases on the platform
-    '''
-    template = get_template('info.html')
-    tmp='PlayStation 3'
-    try:
-        coll = Made.objects.get(platform=tmp)
-        collection = SupportedBy.objects.all().filter(platform=tmp)
-            
-        variables =Context({
-            'Title':'List of '+tmp+' Games',
-            'TYPE':tmp,
-            'Date': coll.platform.releaseDate,
-            'Made':coll.company.name,
-            'set':coll.company.setUp,
-            'result': collection,
-            'user': request.user,
-        })
-    except:
-        variables =Context({
-            'Title':'List of '+tmp+' Games',
-            'user': request.user,
-            'Message':'Games not added yet! ',
-        })
-        return render_to_response('http404.html',variables)
-    return render_to_response('info.html',variables)
-
-@login_required(login_url='/login')
-def wii(request):
-    '''
-    This function contains all the games bases on the platform
-    '''
-    template = get_template('info.html')
-    tmp='Wii'
-    try:
-        coll = Made.objects.get(platform=tmp)
-        collection = SupportedBy.objects.all().filter(platform=tmp)
-            
-        variables =Context({
-            'Title':'List of '+tmp+' Games',
-            'TYPE':tmp,
-            'Date': coll.platform.releaseDate,
-            'Made':coll.company.name,
-            'set':coll.company.setUp,
-            'result': collection,
-            'user': request.user,
-        })
-    except:
-        variables =Context({
-            'Title':'List of '+tmp+' Games',
-            'user': request.user,
-            'Message':'Games not added yet! ',
-        })
-        return render_to_response('http404.html',variables)
-    return render_to_response('info.html',variables)
-
-@login_required(login_url='/login')
-def vita(request):
-    '''
-    This function contains all the games bases on the platform
-    '''
-    template = get_template('info.html')
-    tmp='PSP'
-    try:
-        coll = Made.objects.get(platform=tmp)
-        collection = SupportedBy.objects.all().filter(platform=tmp)
-            
-        variables =Context({
-            'Title':'List of '+tmp+' Games',
-            'TYPE':tmp,
-            'Date': coll.platform.releaseDate,
-            'Made':coll.company.name,
-            'set':coll.company.setUp,
-            'result': collection,
-            'user': request.user,
-        })
-    except:
-        variables =Context({
-            'Title':'List of '+tmp+' Games',
-            'Message':'Games not added yet! ',
-            'user': request.user,
-        })
-        return render_to_response('http404.html',variables)
-    return render_to_response('info.html',variables)
-
-@login_required(login_url='/login')
-def n3ds(request):
-    '''
-    This function contains all the games bases on the platform
-    '''
-    template = get_template('info.html')
-    tmp='Nintendo DS'
-    try:
-        coll = Made.objects.get(platform=tmp)
-        collection = SupportedBy.objects.all().filter(platform=tmp)
-            
-        variables =Context({
-            'Title':'List of '+tmp+' Games',
-            'TYPE':tmp,
-            'Date': coll.platform.releaseDate,
-            'Made':coll.company.name,
-            'set':coll.company.setUp,
-            'result': collection,
-            'user': request.user,
-        })
-    except:
-        variables =Context({
-            'Title':'List of '+tmp+' Games',
-            'Message':'Games not added yet! ',
-            'user': request.user,
-        })
-        return render_to_response('http404.html',variables)
-    return render_to_response('info.html',variables)
-
-@login_required(login_url='/login')
-def mobile(request):
-    '''
-    This function contains all the games bases on the platform
-    '''
-    template = get_template('info.html')
-    tmp='Mobile'
-    try:
-        coll = Made.objects.get(platform=tmp)
-        collection = SupportedBy.objects.all().filter(platform=tmp)
-            
-        variables =Context({
-            'Title':'List of '+tmp+' Games',
-            'TYPE':tmp,
-            'Date': coll.platform.releaseDate,
-            'Made':coll.company.name,
-            'set':coll.company.setUp,
-            'result': collection,
-            'user': request.user,
-        })
-        def action():
-            return render_to_response('comments.html')
-    except:
-        variables =Context({
-            'Title':'List of '+tmp+' Games',
-            'Message':'Games not added yet! ',
-            'user': request.user,
-        })
-        return render_to_response('http404.html',variables)
-    return render_to_response('info.html',variables)
-
-
 
 @login_required(login_url='/login')
 def gameDetails(request,ref):
@@ -342,6 +160,7 @@ def Logout(request):
     '''
     logout(request)
     return redirect('/')
+
 def register(request):
     '''
     '''
@@ -354,27 +173,10 @@ def register(request):
         form= UserCreationForm()
     return render_to_response('registration/register.html',{'form':form,'path':request.path},context_instance=RequestContext(request))
 
-#@login_required(login_url='/login')
-#def AddComment(request,pform,ref):
-#    '''
-#    Add a comment to a game
-#    '''
-#    user = request.user
-#    path = pform+'/'+ref
-#    path2 = request.path
-#    if request.method =='POST':
-#        form = addReviewForm(request.POST)
-#        if form.is_valid():
-#            form.save()
-#            return HttpResponseRedirect('/'+path)
-#    else:
-#        form = addReviewForm()
-#    return render(request,'comment.html',{'form':form,'path':path,'path2':path2,'action':'CREATE'})
-
 @login_required(login_url='/login')
-def AddComment(request,pform,ref):
+def AddReview(request,pform,ref):
     '''
-    Add a comment to a game
+    Add a review to a game
     '''
     user = request.user
     path = pform+'/'+ref
@@ -389,11 +191,20 @@ def AddComment(request,pform,ref):
         form = addReviewForm(user,ref,pform)
     return render(request,'comment.html',{'form':form,'path':path,'path2':path2,'action':'CREATE'})
 
-def EditComment(request,pform,ref,cid):
+def EditReview(request,pform,ref,cid):
+    '''
+    Function to edit a review
+    '''
     user = request.user
     path = pform+'/'+ref
     path2 = request.path
     review = GameReview.objects.get(pk=cid)
+    
+    Game = str(review.game)
+    Rating = str(review.rating)
+    Comment = review.Comment
+    Platform = str(review.platform)
+    
     if review.user != request.user:
         return HttpResponseForbidden()
     if request.method =='POST':
@@ -405,9 +216,19 @@ def EditComment(request,pform,ref,cid):
             return HttpResponseRedirect('/'+path)
     else:
         form = editReviewForm(user,ref,pform,cid)
-    return render(request,'comment.html',{'form':form,'path':path,'path2':path2,'action':'EDIT'})
+    return render(request,'comment.html',{
+                                    'form':form,
+                                    'path':path,
+                                    'path2':path2,
+                                    'action':'EDIT',
+                                    'rate':Rating,
+                                    'review':Comment,
+                                    'game':Game,
+                                    'pform':Platform,
+                                    'flag':1
+                                    })
 
-def DeleteComment(request,pform,ref,id):
+def DeleteReview(request,pform,ref,id):
     '''
     Function to delete a review
     '''
