@@ -12,15 +12,17 @@
             <hr style="width: 830px; float: left; margin-left: 32px">
                 <p><h3>{{COMMENTS}}</h3></p>
 
-        {% for y,x in reviews.items %}
+        {% for x in reviews %}
             <p>#{{x.id}} {{x.user}}  {{x.date}} <p> {{x.Comment}} </p> <p>Rate: [{{x.rate}}]</p>
-            <FORM>
-                <INPUT VALUE= "EDIT" type="button" onClick="parent.location='/review/edit{{path}}/{{x.id}}'">
-            </FORM>
-            <FORM>
-                <INPUT VALUE= "DELETE" type="button" onClick="parent.location='/review/delete{{path}}/{{x.id}}'">
-            </FORM></p>
-            <hr style="width: 830px; float: left; margin-left: 32px">
+            {% if user.username == x.user%}
+                <FORM>
+                    <INPUT VALUE= "EDIT" type="button" onClick="parent.location='/review/edit{{path}}/{{x.Rid}}'">
+                </FORM>
+                <FORM>
+                    <INPUT VALUE= "DELETE" type="button" onClick="parent.location='/review/delete{{path}}/{{x.Rid}}'">
+                </FORM></p>
+            {% endif%}
+        <hr style="width: 830px; float: left; margin-left: 32px">
 
         {% endfor %}
         <FORM>

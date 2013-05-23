@@ -41,7 +41,7 @@ urlpatterns = patterns('',
     #url(r'^comment$/([\w\s]+)',Comment),
     url(r'^review/add/([\w\s]+)/([\w\s]+)$',AddComment),#Comentari
     url(r'^review/edit/([\w\s]+)/([\w\s]+)/([\w\s]+)$',EditComment),
-    url(r'^review/delete/([\w\s]+)/([\w\s]+)$',DeleteComment),
+    url(r'^review/delete/([\w\s]+)/([\w\s]+)/([\w\s]+)$',DeleteComment),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
