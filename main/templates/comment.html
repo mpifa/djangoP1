@@ -23,11 +23,7 @@
 
         </form>
         
-         <form action="{{path2}}" method="post">
-            <input type="submit" value="Cancel">
-        {% csrf_token %}
-
-        </form>
+        <input type="submit" value="Cancel" onclick="parent.location='/{{path}}'">
     </div>
 {%endblock %}
 
