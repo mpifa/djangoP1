@@ -20,6 +20,7 @@ class addReviewForm(ModelForm):
 class editReviewForm(ModelForm):
     def __init__(self,user,gm,pform,cid,*args,**kwrds):
         super(editReviewForm,self).__init__(*args,**kwrds)
+        
         self.fields['user'].empty_label= None
         self.fields['user'].queryset = User.objects.filter(username=user)
         
@@ -29,10 +30,10 @@ class editReviewForm(ModelForm):
         self.fields['platform'].empty_label= None
         self.fields['platform'].queryset = Platform.objects.filter(name=pform)
         
-        self.fields['Comment'].queryset = (GameReview.objects.get(pk=cid))
-        a =GameReview.objects.get(pk=cid)
-        print a.Comment
-       
+        self.fields['rating'].empty_label = None
+        query =(GameReview.objects.get(pk=cid)).rating
+        self.fields['rating'].help_text = "Last rate : "+ str(query)
+        
     class Meta:
         model=GameReview        
         exclude=('date')
