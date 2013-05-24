@@ -92,6 +92,7 @@ def gameDetails(request,ref):
                 'rate':rv.rating,
                 'date':rv.date
                 })
+        print rv.id
         dic.append(dic2)
     dic = sorted(dic, key=lambda k: k['date'])
     
@@ -189,9 +190,8 @@ def AddReview(request,pform,ref):
     user = request.user
     path = pform+'/'+ref
     path2 = request.path
-    Date = datetime.datetime
     if request.method =='POST':
-        form = addReviewForm(user,ref,pform,Date,request.POST)
+        form = addReviewForm(user,ref,pform,request.POST)
         print form
         if form.is_valid():
             form.save()
@@ -210,21 +210,22 @@ def EditReview(request,pform,ref,cid):
     path2 = request.path
     review = GameReview.objects.get(pk=cid)
     
+    Rid = review.id
     Game = str(review.game)
     Rating = str(review.rating)
     Comment = review.Comment
     Platform = str(review.platform)
+    
     if review.user != request.user:
         return HttpResponseForbidden()
     if request.method =='POST':
-        form = editReviewForm(user,ref,pform,cid,request.POST,instance = review)
+        form = editReviewForm(user,ref,pform,request.POST,instance = review)
         print form
         if form.is_valid():
-            review.delete()
             form.save()
             return HttpResponseRedirect('/'+path)
     else:
-        form = editReviewForm(user,ref,pform,cid, instance = review)
+        form = editReviewForm(user,ref,pform, instance = review)
     return render(request,'comment.html',{
                                     'form':form,
                                     'path':path,

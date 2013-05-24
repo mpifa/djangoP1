@@ -18,9 +18,9 @@ class addReviewForm(ModelForm):
         exclude=('date',)
         
 class editReviewForm(ModelForm):
-    def __init__(self,user,gm,pform,cid,*args,**kwrds):
+    def __init__(self,user,gm,pform,*args,**kwrds):
         super(editReviewForm,self).__init__(*args,**kwrds)
-        
+                
         self.fields['user'].empty_label= None
         self.fields['user'].queryset = User.objects.filter(username=user)
         
