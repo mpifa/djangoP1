@@ -64,5 +64,3 @@ class GameReview(models.Model):
     platform = models.ForeignKey(Platform)
     def __unicode__(self):
         return str(self.game)+'_'+str(self.user)
-    
-    

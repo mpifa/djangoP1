@@ -1,19 +1,8 @@
 {% extends "main.html"%}
 
 {%block content%}
-    <h2>{{action}} REVIEW</h2>
-    
-    {% if flag == 1%}
-        <hr style="width: 830px; float: left; margin-left: 32px">
-        <h2>Preview review</h2>
-        <p>rate: {{rate}}</p>
-        <p>Comment: {{review}}</p>
-        <p>Game: {{game}}</p>
-        <p>Platform: {{pform}}</p>
-        <hr style="width: 830px; float: left; margin-left: 32px">
-
-    {% endif %}    
-    
+    <p></p>
+    <h2>{{action}} REVIEW</h2>  
     <div class="left_content">
         <form action="{{path2}}" method="post">{% csrf_token%}
             {{form.as_p}}<p>

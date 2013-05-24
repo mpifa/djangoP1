@@ -18,7 +18,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import login_required
 from operator import itemgetter
 from main.models import *
-from datetime import datetime
+from datetime import *
 from main import *
 from forms import *
 from django import forms
@@ -29,7 +29,7 @@ def mainpage(request):
     '''
     template = get_template('main.html')
     variables = {
-        'titleHead': 'GAMES DATA BASE',
+        'titleHead': 'GAMES DATABASE',
         'pagetitle': 'Welcome to the GamesDB',
         'user': request.user,
         }
@@ -93,7 +93,8 @@ def gameDetails(request,ref):
                 'date':rv.date
                 })
         dic.append(dic2)
-
+    dic = sorted(dic, key=lambda k: k['date'])
+    
     for item in gameInfo:
         elem = [item.game.name]
     types = [str(t.Type) for t in Types]
@@ -111,6 +112,13 @@ def gameDetails(request,ref):
         'reviews':dic,
         'path':request.path,
         })
+    #except:
+    #    variables = Context({
+    #         'titleHead': 'GamesDB',
+    #         'user': request.user,
+    #         'Message':'This requested Game does not exist!',
+    #    })
+    #    return render_to_response('http404.html',variables)
     return render_to_response('details.html',variables)
 
 @login_required(login_url='/login')
@@ -181,8 +189,9 @@ def AddReview(request,pform,ref):
     user = request.user
     path = pform+'/'+ref
     path2 = request.path
+    Date = datetime.datetime
     if request.method =='POST':
-        form = addReviewForm(user,ref,pform,request.POST)
+        form = addReviewForm(user,ref,pform,Date,request.POST)
         print form
         if form.is_valid():
             form.save()
@@ -191,6 +200,7 @@ def AddReview(request,pform,ref):
         form = addReviewForm(user,ref,pform)
     return render(request,'comment.html',{'form':form,'path':path,'path2':path2,'action':'CREATE'})
 
+@login_required(login_url='/login')
 def EditReview(request,pform,ref,cid):
     '''
     Function to edit a review
@@ -204,18 +214,17 @@ def EditReview(request,pform,ref,cid):
     Rating = str(review.rating)
     Comment = review.Comment
     Platform = str(review.platform)
-    
     if review.user != request.user:
         return HttpResponseForbidden()
     if request.method =='POST':
-        form = editReviewForm(user,ref,pform,cid,request.POST)
-        print request
+        form = editReviewForm(user,ref,pform,cid,request.POST,instance = review)
+        print form
         if form.is_valid():
             review.delete()
             form.save()
             return HttpResponseRedirect('/'+path)
     else:
-        form = editReviewForm(user,ref,pform,cid)
+        form = editReviewForm(user,ref,pform,cid, instance = review)
     return render(request,'comment.html',{
                                     'form':form,
                                     'path':path,
@@ -227,7 +236,7 @@ def EditReview(request,pform,ref,cid):
                                     'pform':Platform,
                                     'flag':1
                                     })
-
+@login_required
 def DeleteReview(request,pform,ref,id):
     '''
     Function to delete a review

@@ -13,7 +13,7 @@
                 <p><h3>{{COMMENTS}}</h3></p>
 
         {% for x in reviews %}
-            <p>#{{x.id}} {{x.user}}  {{x.date}} <p> {{x.Comment}} </p> <p>Rate: [{{x.rate}}]</p>
+            <p>#{{x.id}} {{x.user}}  {{x.date}} <p> {{x.Comment}} </p> <p>Rate: [ {{x.rate}}/5 ]</p>
             {% if user.username == x.user%}
                 <FORM>
                     <INPUT VALUE= "EDIT" type="button" onClick="parent.location='/review/edit{{path}}/{{x.Rid}}'">

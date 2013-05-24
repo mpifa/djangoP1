@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 {% load staticfiles %}
-<title>GAME DATABASE</title>
+<title>{{titleHead}}</title>
 <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}" />
 </head>
 <body>
@@ -40,11 +40,9 @@
         </ul>
     </div> 
 
-    
-    
 </div>
     <div class="center_content">
-    <p><h2>{{pagetitle}}</h2></p>
+    <h2>{{pagetitle}}</h2>
     
             {% if user.is_authenticated %}
                 {% block content %}{% endblock %}

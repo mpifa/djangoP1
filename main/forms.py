@@ -26,12 +26,9 @@ class editReviewForm(ModelForm):
         
         self.fields['game'].empty_label= None
         self.fields['game'].queryset = Game.objects.filter(name=gm)
-       
+        
         self.fields['platform'].empty_label= None
         self.fields['platform'].queryset = Platform.objects.filter(name=pform)
-        
-        #self.fields['rating'].empty_label = None
-        query =(GameReview.objects.get(pk=cid)).rating
         
     class Meta:
         model=GameReview        
