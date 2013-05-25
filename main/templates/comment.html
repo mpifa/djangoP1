@@ -2,17 +2,20 @@
 
 {%block content%}
     <p></p>
-    <h2>{{action}} REVIEW</h2>  
+    <h2>{{action}}</h2>  
     <div class="left_content">
-        <form action="{{path2}}" method="post">{% csrf_token%}
+        <form method="post">{% csrf_token%}
             {{form.as_p}}<p>
-            <input type="submit" value="Submit">
-                </p>
-        {% csrf_token %}
-
+                <input style="float: left; margin-left: 220px" type="submit" method = "post" value="Submit" onclick="parent.location='{{path2}}'">
+                <input style="float: left;"  type="button" value="Cancel" onclick="parent.location='/'">
         </form>
-        
-        <input type="submit" value="Cancel" onclick="parent.location='/{{path}}'">
+                {%if flag == 2%}
+                    <input style="float: left; margin-left: 35px"  type="button" value="{{tag}}" onclick="parent.location='{{path}}'">
+                {%endif%}
+
+                </p>
+
+
     </div>
 {%endblock %}
 

@@ -42,6 +42,7 @@ def gamesByPlatform(request):
     '''
     template = get_template('info.html')
     tmp = request.path.split('/')[1]
+    path = request.path
     try:
         coll = Made.objects.get(platform=tmp)
         collection = SupportedBy.objects.all().filter(platform=tmp)
@@ -54,12 +55,14 @@ def gamesByPlatform(request):
             'set':coll.company.setUp,
             'result': collection,
             'user': request.user,
+            'path': path,
         })
     except:
         variables =Context({
             'Title':'List of '+tmp+' Games',
             'user': request.user,
             'Message':'Games not added yet! ',
+            'path':path,
         })
         return render_to_response('http404.html',variables)
     return render_to_response('info.html',variables)
@@ -198,7 +201,7 @@ def AddReview(request,pform,ref):
             return HttpResponseRedirect('/'+path)
     else:
         form = addReviewForm(user,ref,pform)
-    return render(request,'comment.html',{'form':form,'path':path,'path2':path2,'action':'CREATE'})
+    return render(request,'comment.html',{'form':form,'path':path,'path2':path2,'action':'CREATE REVIEW'})
 
 @login_required(login_url='/login')
 def EditReview(request,pform,ref,cid):
@@ -220,7 +223,6 @@ def EditReview(request,pform,ref,cid):
         return HttpResponseForbidden()
     if request.method =='POST':
         form = editReviewForm(user,ref,pform,request.POST,instance = review)
-        print form
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/'+path)
@@ -247,3 +249,87 @@ def DeleteReview(request,pform,ref,id):
         return HttpResponseForbidden()
     rv.delete()
     return HttpResponseRedirect('/'+pform+'/'+ref)
+
+    ############################################################
+   ###                                                      ###
+  ##          REPAIR THIS PART, ISN'T WORKING!!!!           ##   
+ #                                                          #
+############################################################
+@login_required(login_url='/login')
+def addGame(request):
+    '''
+    Add a game
+    '''
+    user = request.user
+    current = request.path
+    Next = ""
+    if request.method =='POST':
+        form = addGameForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/asgnTypeOfGame/'+form.cleaned_data['name'])
+    else:
+        form = addGameForm()
+    return render(request,'comment.html',{'form':form,'path':"/addCompany/",'path2':current,'action':'CREATE GAME','flag':2,'tag':'Add publisher'})
+
+
+def editGame(request):
+    return
+def deleteGame(request):
+    return
+def addCompany(request):
+    '''
+    Add company
+    '''
+    user = request.user
+    current = request.path
+    print current
+    Next = ""
+    if request.method =='POST':
+        form = addCompanyForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/addGame')
+    else:
+        form = addCompanyForm()
+    return render(request,'comment.html',{'form':form,'path':"/addGame",'path2':current,'action':'CREATE GAME','flag':2,'tag':'Back'})
+
+def editCompany(request):
+    return
+def deleteCompany(request):
+    return
+def addGameToPlat(request,game):
+    user = request.user,
+    current = request.path
+    print current
+    Next = ""
+    if request.method =='POST':
+        form = addGameToPlatForm(game,request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(current)
+    else:
+        form = addGameToPlatForm(game)
+    return render(request,'comment.html',{'form':form,'path':"/",'path2':current,'action':'CREATE GAME','flag':2,'method':'REPOST','tag':'Finish'})
+
+def editGameOfPlat(request):
+    return
+def deleteGameOfPlat(request):
+    return
+def asgnTypeOfGame(request,game):
+    ser = request.user
+    current = request.path
+    Next = ""
+    if request.method =='POST':
+        form = asgnGameTypeOfGameForm(game,request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/asgnTypeOfGame/'+game)
+    else:
+        form = asgnGameTypeOfGameForm(game)
+    return render(request,'comment.html',{'form':form,'path':"/addGameToPlat/"+game,'path2':current,'action':'CREATE GAME','flag':2,'method':'REPOST','tag':'Next'})
+def editAsgmntTypeOfGame(request):
+    return
+def deleteAsgmntTypeOfGame(request):
+    return
+

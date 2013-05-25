@@ -13,19 +13,16 @@
                 <p><h3>{{COMMENTS}}</h3></p>
 
         {% for x in reviews %}
-            <p>#{{x.id}} {{x.user}}  {{x.date}} <p> {{x.Comment}} </p> <p>Rate: [ {{x.rate}}/5 ]</p>
-            {% if user.username == x.user%}
-                <FORM>
-                    <INPUT VALUE= "EDIT" type="button" onClick="parent.location='/review/edit{{path}}/{{x.Rid}}'">
-                </FORM>
-                <FORM>
-                    <INPUT VALUE= "DELETE" type="button" onClick="parent.location='/review/delete{{path}}/{{x.Rid}}'">
-                </FORM></p>
-            {% endif%}
-        <hr style="width: 830px; float: left; margin-left: 32px">
+            <p>#{{x.id}} {{x.user}}  {{x.date}}
+                {% if user.username == x.user%}
+                    <INPUT  style="float: right; margin-right: 40px" VALUE= "EDIT" type="button" onClick="parent.location='/review/edit{{path}}/{{x.Rid}}'">
+                    <INPUT style="float: right" VALUE= "DELETE" type="button" onClick="parent.location='/review/delete{{path}}/{{x.Rid}}'">
+                {% endif%}
+            </p><p> {{x.Comment}} </p> <p>Rate: [ {{x.rate}}/5 ]</p>
+            <hr style="width: 830px; float: left; margin-left: 32px">
 
         {% endfor %}
         <FORM>
-            <INPUT VALUE= "Comment" type="button" onClick="parent.location='/review/add{{path}}'">
+            <INPUT VALUE= "ADD REVIEW" type="button" onClick="parent.location='/review/add{{path}}'">
         </FORM>
     {% endblock content %}

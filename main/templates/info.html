@@ -7,6 +7,9 @@
             <p>Release Date: {{Date}} </p>
             <p>Made by: {{Made}} (Set up at:{{set}})</p>
         <hr style="width: 275px; float: left; margin-left: 32px"><p>
+        <p><input style="float: left; margin-left: 35px" type="submit" value="ADD GAME" onclick="parent.location='addGame'"></p>
+        <p></p>
+        <p></p>
         {% for item in result %}
         <p><a href=/{{TYPE|urlencode}}/{{item.game.name|urlencode}}>{{item.game.name}}</a></p>
         <p></p>

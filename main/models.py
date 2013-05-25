@@ -6,7 +6,7 @@ from datetime import *
 # Create your models here.
 
 class Company(models.Model):
-    setUp = models.DateField()
+    setUp = models.DateField(default=date.today)
     name = models.CharField(max_length=100,unique=True,primary_key=True)
     #image = models.ImageField(upload_to='companies',blank=True)
     
@@ -17,7 +17,7 @@ class Platform(models.Model):
     Types=(
         ('PlayStation 3','PlayStation 3'),('Xbox 360','Xbox 360'),('PC','PC'),('Nintendo DS','Nintendo DS'),('Mobile','Mobile'),('PSP','PSP'),
     )
-    releaseDate = models.DateField()
+    releaseDate = models.DateField(default=date.today)
     name = models.CharField(max_length=100,choices=Types,unique=True,primary_key=True)
     #image = models.ImageField(upload_to='platforms',blank=True)
 
@@ -31,7 +31,7 @@ class Made(models.Model):
         return str(self.company)+'_'+str(self.platform)
 
 class Game(models.Model):
-    releaseDate = models.DateField()
+    releaseDate = models.DateField(default=date.today)
     name = models.CharField(max_length=100,unique=True,primary_key=True)
     publisher = models.ForeignKey(Company)
     def __unicode__(self):
@@ -48,9 +48,9 @@ class BelongsTo(models.Model):
     Types=(
         ('Action','Action'),('Adventure','Adventure'),('Simulation','Simulation'),
         ('Sports','Sports'),('Driving','Driving'),('Strategy','Strategy'),('MMO','MMO'),
-        ('Role','Role'),('a','a')
+        ('Role','Role')
         )
-    Type = models.CharField(max_length=15,choices=Types,unique=True,primary_key=True)
+    Type = models.CharField(max_length=15,choices=Types,primary_key=True)
     def __unicode__(self):
         return str(self.game)+'_'+str(self.Type)
     
