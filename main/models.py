@@ -50,9 +50,9 @@ class BelongsTo(models.Model):
         ('Sports','Sports'),('Driving','Driving'),('Strategy','Strategy'),('MMO','MMO'),
         ('Role','Role')
         )
-    Type = models.CharField(max_length=15,choices=Types,primary_key=True)
+    Type = models.CharField(max_length=15,choices=Types)
     def __unicode__(self):
-        return str(self.game)+'_'+str(self.Type)
+        return str(self.game)+' Type: '+str(self.Type)
     
 class GameReview(models.Model):
     RATING_CHOICES=((1,1),(2,2),(3,3),(4,4),(5,5))

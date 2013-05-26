@@ -60,6 +60,7 @@ class asgnGameTypeOfGameForm(ModelForm):
         super(asgnGameTypeOfGameForm,self).__init__(*args,**kwrds)
         self.fields['game'].empty_label = None
         self.fields['game'].queryset = Game.objects.all().filter(name=gm)
+        self.fields['Type'].empty_label = None
     class Meta:
         model=BelongsTo
 

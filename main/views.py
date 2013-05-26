@@ -275,8 +275,24 @@ def addGame(request):
 
 def editGame(request):
     return
-def deleteGame(request):
-    return
+def deleteGame(request,pform,gm):
+    '''
+    '''
+    sup = SupportedBy.objects.all().filter(game = gm,platform=pform)
+    rev = GameReview.objects.all().filter(game = gm,platform=pform)
+    
+    sup.delete()
+    rev.delete()
+    
+    if not (SupportedBy.objects.all().filter(game = gm)):
+        bel = BelongsTo.objects.all().filter(game = gm)
+        gm = Game.objects.get(name = gm)
+        
+        bel.delete()
+        gm.delete()
+
+    return HttpResponseRedirect('/'+pform)
+
 def addCompany(request):
     '''
     Add company
@@ -294,10 +310,6 @@ def addCompany(request):
         form = addCompanyForm()
     return render(request,'comment.html',{'form':form,'path':"/addGame",'path2':current,'action':'CREATE GAME','flag':2,'tag':'Back'})
 
-def editCompany(request):
-    return
-def deleteCompany(request):
-    return
 def addGameToPlat(request,game):
     user = request.user,
     current = request.path
@@ -305,31 +317,34 @@ def addGameToPlat(request,game):
     Next = ""
     if request.method =='POST':
         form = addGameToPlatForm(game,request.POST)
+
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(current)
+            try:
+                if SupportedBy.objects.get(game=form.cleaned_data['game'],  platform= form.cleaned_data['platform']):
+                    return HttpResponseRedirect(current)
+            except: 
+                form.save()
+                return HttpResponseRedirect('/addGameToPlat/'+game)        
     else:
         form = addGameToPlatForm(game)
-    return render(request,'comment.html',{'form':form,'path':"/",'path2':current,'action':'CREATE GAME','flag':2,'method':'REPOST','tag':'Finish'})
+    return render(request,'comment.html',{'form':form,'path':"/",'game':game,'path2':current,'action':'CREATE GAME','flag':2,'method':'REPOST','tag':'Finish'})
 
-def editGameOfPlat(request):
-    return
-def deleteGameOfPlat(request):
-    return
 def asgnTypeOfGame(request,game):
     ser = request.user
     current = request.path
     Next = ""
     if request.method =='POST':
         form = asgnGameTypeOfGameForm(game,request.POST)
+
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/asgnTypeOfGame/'+game)
+            try:
+                if BelongsTo.objects.get(game=form.cleaned_data['game'],  Type= form.cleaned_data['Type']):
+                    return HttpResponseRedirect(current)
+            except: 
+                form.save()
+                return HttpResponseRedirect('/asgnTypeOfGame/'+game)
     else:
         form = asgnGameTypeOfGameForm(game)
-    return render(request,'comment.html',{'form':form,'path':"/addGameToPlat/"+game,'path2':current,'action':'CREATE GAME','flag':2,'method':'REPOST','tag':'Next'})
-def editAsgmntTypeOfGame(request):
-    return
-def deleteAsgmntTypeOfGame(request):
-    return
+    return render(request,'comment.html',{'form':form,'game':game,'path':"/addGameToPlat/"+game,'path2':current,'action':'CREATE GAME','flag':2,'method':'REPOST','tag':'Next'})
+
 

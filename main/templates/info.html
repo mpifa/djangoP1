@@ -11,7 +11,8 @@
         <p></p>
         <p></p>
         {% for item in result %}
-        <p><a href=/{{TYPE|urlencode}}/{{item.game.name|urlencode}}>{{item.game.name}}</a></p>
+        <p><a href=/{{TYPE|urlencode}}/{{item.game.name|urlencode}}>{{item.game.name}}</a>
+        <input style="margin-left: 35px" type="submit" value="DELETE" onclick="parent.location='deleteGame/{{TYPE}}/{{item.game.name}}'">
         <p></p>
     {% endfor %}
 

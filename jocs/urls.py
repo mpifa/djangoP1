@@ -48,18 +48,18 @@ urlpatterns = patterns('',
     
     #COMPANY MANAGEMENT 
     url(r'^addCompany/$',addCompany),
-    url(r'^editCompany/([\w\s]+)/([\w\s]+)$',editCompany),
-    url(r'^deleteCompany/([\w\s]+)/([\w\s]+)$',deleteCompany),
+    #url(r'^editCompany/([\w\s]+)/([\w\s]+)$',editCompany),
+    #url(r'^deleteCompany/([\w\s]+)/([\w\s]+)$',deleteCompany),
     
     #PLATFORM - GAME MANAGEMENT 
     url(r'^addGameToPlat/([\w\s]+)$',addGameToPlat),
-    url(r'^editGameToPlat/([\w\s]+)/([\w\s]+)$',editGameOfPlat),
-    url(r'^removeGameToPlat/([\w\s]+)/([\w\s]+)',deleteGameOfPlat),
+    #url(r'^editGameToPlat/([\w\s]+)/([\w\s]+)$',editGameOfPlat),
+    #url(r'^removeGameToPlat/([\w\s]+)/([\w\s]+)',deleteGameOfPlat),
     
     #GAME - TYPE ASSIGMENT
     url(r'^asgnTypeOfGame/([\w\s]+)/$',asgnTypeOfGame),
-    url(r'^typeOfGame/([\w\s]+)/$',editAsgmntTypeOfGame),
-    url(r'^typeOfGame/([\w\s]+)/$',deleteAsgmntTypeOfGame),
+    #url(r'^typeOfGame/([\w\s]+)/$',editAsgmntTypeOfGame),
+    #url(r'^typeOfGame/([\w\s]+)/$',deleteAsgmntTypeOfGame),
 
     
     
