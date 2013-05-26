@@ -62,5 +62,6 @@ class GameReview(models.Model):
     Comment = models.TextField(max_length=255,blank=True)
     game = models.ForeignKey(Game)
     platform = models.ForeignKey(Platform)
+    city = models.CharField(max_length=100,blank=True)
     def __unicode__(self):
         return str(self.game)+'_'+str(self.user)

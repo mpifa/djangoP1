@@ -91,11 +91,11 @@ def gameDetails(request,ref):
                 'id': cid,
                 'Rid':rv.id,
                 'user': str(rv.user),
-                'Comment':str(rv.Comment),
+                'Comment':rv.Comment,
                 'rate':rv.rating,
-                'date':rv.date
+                'date':rv.date,
+                'city':str(rv.city),
                 })
-        print rv.id
         dic.append(dic2)
     dic = sorted(dic, key=lambda k: k['date'])
     
@@ -201,7 +201,7 @@ def AddReview(request,pform,ref):
             return HttpResponseRedirect('/'+path)
     else:
         form = addReviewForm(user,ref,pform)
-    return render(request,'comment.html',{'form':form,'path':path,'path2':path2,'action':'CREATE REVIEW'})
+    return render(request,'comment.html',{'form':form,'path':path,'path2':path2,'action':'CREATE REVIEW','flag':3})
 
 @login_required(login_url='/login')
 def EditReview(request,pform,ref,cid):
@@ -250,15 +250,10 @@ def DeleteReview(request,pform,ref,id):
     rv.delete()
     return HttpResponseRedirect('/'+pform+'/'+ref)
 
-    ############################################################
-   ###                                                      ###
-  ##          REPAIR THIS PART, ISN'T WORKING!!!!           ##   
- #                                                          #
-############################################################
 @login_required(login_url='/login')
 def addGame(request):
     '''
-    Add a game
+    Add a game using a form
     '''
     user = request.user
     current = request.path
@@ -271,11 +266,9 @@ def addGame(request):
         form = addGameForm()
     return render(request,'comment.html',{'form':form,'path':"/addCompany/",'path2':current,'action':'CREATE GAME','flag':2,'tag':'Add publisher'})
 
-
-def editGame(request):
-    return
 def deleteGame(request,pform,gm):
     '''
+    Delete a game requested using its platform and game
     '''
     sup = SupportedBy.objects.all().filter(game = gm,platform=pform)
     rev = GameReview.objects.all().filter(game = gm,platform=pform)
@@ -305,9 +298,12 @@ def addCompany(request):
             return HttpResponseRedirect('/addGame')
     else:
         form = addCompanyForm()
-    return render(request,'comment.html',{'form':form,'path':"/addGame",'path2':current,'action':'CREATE GAME','flag':2,'tag':'Back'})
+    return render(request,'comment.html',{'form':form,'path':"/addGame",'path2':current,'action':'CREATE GAME','flag':4,'tag':'Back'})
 
 def addGameToPlat(request,game):
+    '''
+    Assign game to platform
+    '''
     user = request.user,
     current = request.path
     if request.method =='POST':
@@ -324,6 +320,9 @@ def addGameToPlat(request,game):
     return render(request,'comment.html',{'form':form,'path':"/",'game':game,'path2':current,'action':'CREATE GAME','flag':2,'method':'REPOST','tag':'Finish'})
 
 def asgnTypeOfGame(request,game):
+    '''
+    Assign game to its type
+    '''
     ser = request.user
     current = request.path
     if request.method =='POST':
@@ -339,5 +338,3 @@ def asgnTypeOfGame(request,game):
     else:
         form = asgnGameTypeOfGameForm(game)
     return render(request,'comment.html',{'form':form,'game':game,'path':"/addGameToPlat/"+game,'path2':current,'action':'CREATE GAME','flag':2,'method':'REPOST','tag':'Next'})
-
-
