@@ -262,7 +262,6 @@ def addGame(request):
     '''
     user = request.user
     current = request.path
-    Next = ""
     if request.method =='POST':
         form = addGameForm(request.POST)
         if form.is_valid():
@@ -299,8 +298,6 @@ def addCompany(request):
     '''
     user = request.user
     current = request.path
-    print current
-    Next = ""
     if request.method =='POST':
         form = addCompanyForm(request.POST)
         if form.is_valid():
@@ -313,11 +310,8 @@ def addCompany(request):
 def addGameToPlat(request,game):
     user = request.user,
     current = request.path
-    print current
-    Next = ""
     if request.method =='POST':
         form = addGameToPlatForm(game,request.POST)
-
         if form.is_valid():
             try:
                 if SupportedBy.objects.get(game=form.cleaned_data['game'],  platform= form.cleaned_data['platform']):
@@ -332,7 +326,6 @@ def addGameToPlat(request,game):
 def asgnTypeOfGame(request,game):
     ser = request.user
     current = request.path
-    Next = ""
     if request.method =='POST':
         form = asgnGameTypeOfGameForm(game,request.POST)
 

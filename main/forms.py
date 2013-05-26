@@ -1,4 +1,4 @@
-from django.forms import ModelForm
+from django.forms import *
 from main.models import *
 
 class addReviewForm(ModelForm):
@@ -40,6 +40,7 @@ class addGameForm(ModelForm):
         self.fields['releaseDate'].help_text = "* (dd/mm/yyyy)"
     class Meta:
         model=Game
+        
 class addCompanyForm(ModelForm):
     def __init__(self,*args,**kwrds):
         super(addCompanyForm,self).__init__(*args,**kwrds)
@@ -63,6 +64,8 @@ class asgnGameTypeOfGameForm(ModelForm):
         self.fields['Type'].empty_label = None
     class Meta:
         model=BelongsTo
+
+
 
 #        
 #class editGameForm(ModelForm):

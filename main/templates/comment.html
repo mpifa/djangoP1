@@ -1,5 +1,9 @@
 {% extends "main.html"%}
-
+{%load staticfiles%}
+{% block head%}
+		<script	src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script	src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+{%endblock%}
 {%block content%}
     <p></p>
     <h2>{{action}}</h2>  
@@ -12,9 +16,17 @@
                 {%if flag == 2%}
                     <input style="float: left; margin-left: 35px"  type="button" value="{{tag}}" onclick="parent.location='{{path}}'">
                 {%endif%}
-
                 </p>
+    <script >
 
+        $(function() {
+        $.getJSON('{% static "json/games.json" %}', function(data){
+        $("#id_name").autocomplete({
+        source: data
+        });
+        });
+        });
+    </script>
 
     </div>
 {%endblock %}
