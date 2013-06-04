@@ -26,8 +26,8 @@
                     <INPUT style="float: right" VALUE= "DELETE" type="button" onClick="parent.location='/review/delete{{path}}/{{x.Rid}}'">
                 {% endif%}
             <p>Rate: [ <span property="RATE"> {{x.rate}}</span>/5 ]</p>
-            <p> {{x.Comment}} </p> 
-            <p> From : [{{x.city}}]</p>
+            <p> <span property="COMMENT"> {{x.Comment}}<span> </p> 
+            <p>  From : [<span property="FROM">{{x.city}}</span>]</p>
             <hr style="width: 830px; float: left; margin-left: 32px">
 
         {% endfor %}
