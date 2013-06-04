@@ -105,7 +105,7 @@ def gameDetails(request,ref):
     plat = [str(p.platform.name) for p in gameInfo]
     variables = Context({
         'titleHead': 'GamesDB',
-        'pageTitle': 'Characteristics of '+elem[0],
+        'pageTitle': 'Characteristics of ',
         'name':elem[0],
         'date': Publisher.releaseDate,
         'type':types ,
