@@ -3,16 +3,22 @@
     {% block content %}
 <span   vocab="http://schema.org/"    typeof="VideoGame">  
   <h1> 
-  
-    
-  
-
         <p></p>
         <h1>{{pageTitle}} <span property="name">{{name}}</span> </h1>
-            <p>DATE: &nbsp{{date}}</p>  
-            <p>TYPE:&nbsp{%for t in type%}<a href=/type/{{t}}>{{t}}</a>&nbsp{%endfor%}</p>
-            <p>PLATFORM:&nbsp{%for p in platform%}{{p}}&nbsp{%endfor%}</p>
-            <p>PUBLISHER:&nbsp <a href=/company/{{company|urlencode}}>{{company}}</a></p>
+            <p>DATE: &nbsp <span property="Date_creation">{{date}}</p>  
+            <p>TYPE:&nbsp
+                {%for t in type%}
+                <span property="Game_Type" content={{t}}>
+                    <a href=/type/{{t}}> {{t}}</a>&nbsp
+                {%endfor%}
+            </p>
+            <p>PLATFORM:&nbsp
+                {%for p in platform%} 
+                    <span property="Game_Platform" content={{p}}>{{p}}&nbsp
+                        {%endfor%}
+            </p><span property="Game_Company" content={{company}}>
+            <p>PUBLISHER:&nbsp <a href=/company/{{company|urlencode}}> {{company}}</a></p>
+            <p span rel="averageRating" typeof="averageRating">AVERAGE RATING:<span property="average">{{average|stringformat:".1f"}}  from <span property="reviewCount">{{rvs}} users
             <p></p>
             <hr style="width: 830px; float: left; margin-left: 32px">
                 <p><h3>{{COMMENTS}}</h3></p>
@@ -24,10 +30,11 @@
                 {% if user.username == x.user%}
                     <INPUT  style="float: right; margin-right: 40px" VALUE= "EDIT" type="button" onClick="parent.location='/review/edit{{path}}/{{x.Rid}}'">
                     <INPUT style="float: right" VALUE= "DELETE" type="button" onClick="parent.location='/review/delete{{path}}/{{x.Rid}}'">
-                {% endif%}
-            <p>Rate: [ <span property="RATE"> {{x.rate}}</span>/5 ]</p>
-            <p> <span property="COMMENT"> {{x.Comment}}<span> </p> 
-            <p>  From : [<span property="FROM">{{x.city}}</span>]</p>
+                {% endif%}              
+                <span rel="reviewRating" typeof="Rating">
+            <br>Rate: [ <span property="RATE">{{x.rate}}</span></span>/5 ]
+            <br> <span property="COMMENT">{{x.Comment}} 
+            <br>From : [<span property="FROM">{{x.city}}]
             <hr style="width: 830px; float: left; margin-left: 32px">
 
         {% endfor %}

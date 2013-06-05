@@ -84,6 +84,7 @@ def gameDetails(request,ref):
     dic2=({})
     cid=0
     comments = {}
+    average = 0
     #try:
     for rv in Reviews:
         cid=cid+1
@@ -96,7 +97,11 @@ def gameDetails(request,ref):
                 'date':rv.date,
                 'city':str(rv.city),
                 })
+        average = average + rv.rating
         dic.append(dic2)
+    average = float(average)
+    average=average/cid
+    print average
     dic = sorted(dic, key=lambda k: k['date'])
     
     for item in gameInfo:
@@ -109,6 +114,8 @@ def gameDetails(request,ref):
         'name':elem[0],
         'date': Publisher.releaseDate,
         'type':types ,
+        'average':average,
+        'rvs':cid,
         'platform':plat,
         'company': Publisher.publisher.name,
         'user': request.user,
