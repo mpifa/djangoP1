@@ -3,6 +3,7 @@
 {% block head%}
 		<script	src="http://code.jquery.com/jquery-1.9.1.js"></script>
 		<script	src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        <title>GamesDB - {{path1}}</title>
 {%endblock%}
 {%block content%}
     <p></p>
@@ -11,7 +12,7 @@
         <form method="post">{% csrf_token%}
             {{form.as_p}}<p>
                 <input style="float: left; margin-left: 220px" type="submit" method = "post" value="Submit" onclick="parent.location='{{path2}}'">
-                <input style="float: left;"  type="button" value="Cancel" onclick="parent.location='/deleteGame/{{game}}'">
+                <input style="float: left;"  type="button" value="Cancel" onclick="parent.location='/{{game}}'">
         </form>
                 {%if flag == 2%}
                     <p> </p>

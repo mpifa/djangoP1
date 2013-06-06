@@ -1,20 +1,14 @@
 {% extends "main.html" %}
-
+{% block head%}
+<title>GamesDB - All {{TYPE}} Games </title>
+{% endblock%}
     {% block content %}
         <h2>{{Title}}</h2>
         {% for item in result %}
         <p>{{item}}</p>
                 {% empty %}
         <li> No elements added yet.</li>
-        <div style="clear: both">
         {% endfor %}
-    <div style="background-color: #B0B111;width: 700px;">
-        {% for type in TYPE%}
-        <p></p>
-                {% for x in type%}
-                <a href=/{{x|urlencode}}/{{item|urlencode}}>{{x}}</a>
-                {%endfor%}
-            {% endfor %}
         </div>
         </div>
     {% endblock %}

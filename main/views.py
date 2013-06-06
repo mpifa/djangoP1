@@ -61,6 +61,7 @@ def gamesByPlatform(request):
         variables =Context({
             'Title':'List of '+tmp+' Games',
             'user': request.user,
+            'TYPE':tmp,
             'Message':'Games not added yet! ',
             'path':path,
         })
@@ -79,7 +80,6 @@ def gameDetails(request,ref):
     Publisher = Game.objects.get(name=ref)
     Gname = request.path.split('/')[2]
     Reviews = GameReview.objects.all().filter(game=Gname)
-
     dic=[]
     dic2=({})
     cid=0
@@ -99,15 +99,16 @@ def gameDetails(request,ref):
                 })
         average = average + rv.rating
         dic.append(dic2)
-    average = float(average)
-    average=average/cid
+    if average>0:
+        average = float(average)
+        average=average/cid
     print average
     dic = sorted(dic, key=lambda k: k['date'])
-    
     for item in gameInfo:
         elem = [item.game.name]
     types = [str(t.Type) for t in Types]
     plat = [str(p.platform.name) for p in gameInfo]
+
     variables = Context({
         'titleHead': 'GamesDB',
         'pageTitle': 'Characteristics of ',
@@ -121,6 +122,7 @@ def gameDetails(request,ref):
         'user': request.user,
         'COMMENTS':'USERS REVIEWS',
         'reviews':dic,
+        'RATING_CHOICES':GameReview.RATING_CHOICES,
         'path':request.path,
         })
     #except:
@@ -140,12 +142,14 @@ def gameByType(request,ref):
     try:
         Types = BelongsTo.objects.filter(Type=ref)
         g=[]
+        tmp = ref
         for t in Types:
             g.append(str(t.game.name))
         variables=Context({
             'Title': 'All '+ref+' games',
             'result': g,
             'user': request.user,
+            'TYPE':tmp,
     
             })
     except:
@@ -199,6 +203,7 @@ def AddReview(request,pform,ref):
     '''
     user = request.user
     path = pform+'/'+ref
+    path1 = pform+' - '+ref
     path2 = request.path
     if request.method =='POST':
         form = addReviewForm(user,ref,pform,request.POST)
@@ -208,7 +213,7 @@ def AddReview(request,pform,ref):
             return HttpResponseRedirect('/'+path)
     else:
         form = addReviewForm(user,ref,pform)
-    return render(request,'comment.html',{'form':form,'path':path,'path2':path2,'action':'CREATE REVIEW','flag':3})
+    return render(request,'comment.html',{'form':form,'path':path,'path1':path1,'path2':path2,'action':'CREATE REVIEW','flag':3})
 
 @login_required(login_url='/login')
 def EditReview(request,pform,ref,cid):

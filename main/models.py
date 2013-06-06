@@ -55,7 +55,7 @@ class BelongsTo(models.Model):
         return str(self.game)+' Type: '+str(self.Type)
     
 class GameReview(models.Model):
-    RATING_CHOICES=((1,1),(2,2),(3,3),(4,4),(5,5))
+    RATING_CHOICES=((1,'one'),(2,'two'),(3,'three'),(4,'four'),(5,'five'))
     rating = models.PositiveSmallIntegerField('Rating(stars)',blank=False,default=3,choices=RATING_CHOICES)
     user = models.ForeignKey(User)
     date = models.DateTimeField(default=datetime.now)

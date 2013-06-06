@@ -1,47 +1,60 @@
-{% extends "main.html" %}
-
-    {% block content %}
-<span   vocab="http://schema.org/"    typeof="VideoGame">  
-  <h1> 
-        <p></p>
-        <h1>{{pageTitle}} <span property="name">{{name}}</span> </h1>
-            <p>DATE: &nbsp <span property="Date_creation">{{date}}</span></p>  
+        {% extends "main.html" %}
+        {% block head%}
+        <title>GamesDB - {{name}}</title>
+        {% endblock %}
+        {% block content %}
+        <span   vocab="http://schema.org/"    typeof="CreativeWork">  
+          <h1> 
+            {{pageTitle}} <span property="name">{{name}}</span> 
+          </h1>
+          <p>DATE: &nbsp <span property="Date_creation">{{date}}</span></p>  
             <p>TYPE:&nbsp
                 {%for t in type%}
                 <span property="Game_Type" content={{t}}></span>
-                    <a href=/type/{{t}}> {{t}}</a>&nbsp
+                <a href=/type/{{t}}> {{t}}</a>&nbsp
                 {%endfor%}
             </p>
             <p>PLATFORM:&nbsp
                 {%for p in platform%} 
-                    <span property="Game_Platform" content={{p|cut:" "}}></span>{{p}}&nbsp
-                        {%endfor%}
+                <span property="Game_Platform" content={{p|cut:" "}}></span>{{p}}&nbsp
+                {%endfor%}
             </p><span property="Game_Company" content={{company|cut:" "}}></span>
             <p>PUBLISHER:&nbsp <a href=/company/{{company|urlencode}}> {{company}}</span></a></p>
-            <p span rel="averageRating" typeof="averageRating">
+            
+
+            <div span style="margin-left:0cm" property="aggregateRating" typeof="AggregateRating">
                 AVERAGE RATING:
-                <span property="average">{{average|stringformat:".1f"}}</span>  from <span property="reviewCount">{{rvs}}</span> users
-            </p>
+                <span property="ratingValue">{{average|stringformat:".1f"}}</span>
+                out of <span property="bestRating">{{RATING_CHOICES.4.0}}</span>    
+                based on  <span property="reviewCount">{{rvs}}</span> users
+            </div>
+
             <p></p>
-            <hr style="width: 830px; float: left; margin-left: 32px">
-                <p><h3>{{COMMENTS}}</h3></p>
-        {% for x in reviews %}
+            <hr style="width: 830px; float: left; margin-left: 32px"></hr>
+            <p><h3>{{COMMENTS}}</h3></p>
+            {% for x in reviews %}
             <p span rel="Review" typeof="User_Review">#
                 <span property="ID">{{x.id}}</span>
                 <span property="USER"> {{x.user}}</span>  
                 {{x.date}}
                 {% if user.username == x.user%}
-                    <INPUT  style="float: right; margin-right: 40px" VALUE= "EDIT" type="button" onClick="parent.location='/review/edit{{path}}/{{x.Rid}}'">
-                    <INPUT style="float: right" VALUE= "DELETE" type="button" onClick="parent.location='/review/delete{{path}}/{{x.Rid}}'">
+                    <INPUT  style="float: right; margin-right: 40px" VALUE= "EDIT" type="button" onClick="parent.location='/review/edit{{path}}/{{x.Rid}}'"></input>
+                    <INPUT style="float: right" VALUE= "DELETE" type="button" onClick="parent.location='/review/delete{{path}}/{{x.Rid}}'"></input>
                 {% endif%}             
                 <span rel="reviewRating" typeof="Rating">
-            <br>Rate: [ <span property="RATE">{{x.rate}}</span></span>/5 ]
-            <br> <span property="COMMENT">{{x.Comment}}</span> 
-            <br>From : [<span property="FROM">{{x.city}}</span>]
-            <hr style="width: 830px; float: left; margin-left: 32px">
+                    <span property="worstRating" content="1"></span>
+                    <span property="bestRating" content="5"></span>
+                    <br>Rate: [ <span property="ratingValue">{{x.rate}}</span>/5 ]
+                </span>
+                    <br><span property="COMMENT">{{x.Comment}}</span>
+                    <br>From : [<span property="FROM">{{x.city}}</span>]
 
-        {% endfor %}
-        <FORM>
-            <INPUT VALUE= "ADD REVIEW" type="button" onClick="parent.location='/review/add{{path}}'">
-        </FORM>
-    {% endblock content %}
+                <hr style="width: 830px; float: left; margin-left: 32px"> </hr>
+
+            {% endfor %}
+
+            </p>
+            <FORM>
+                <INPUT VALUE= "ADD REVIEW" type="button" onClick="parent.location='/review/add{{path}}'">
+            </FORM>
+{% endblock content %}
