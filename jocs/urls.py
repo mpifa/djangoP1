@@ -4,6 +4,8 @@ from django.contrib import admin
 from main.views import *
 from django.contrib.auth import logout
 from django.shortcuts import redirect
+from django.views.generic.simple import redirect_to
+
 
 admin.autodiscover()
 
@@ -54,7 +56,9 @@ urlpatterns = patterns('',
     #GAME - TYPE ASSIGMENT
     url(r'^asgnTypeOfGame/([\w\s]+)/$',asgnTypeOfGame),
 
-
+    #GAME - CANCEL
+    url(r'^cancel/([\w\s]+)/$',cancelGame),
+    url(r'^cancel/$',redirect_to,{'url':'/'}),
     
     
     # Uncomment the admin/doc line below to enable admin documentation:

@@ -12,7 +12,7 @@
         <form method="post">{% csrf_token%}
             {{form.as_p}}<p>
                 <input style="float: left; margin-left: 220px" type="submit" method = "post" value="Submit" onclick="parent.location='{{path2}}'">
-                <input style="float: left;"  type="button" value="Cancel" onclick="parent.location='/{{game}}'">
+                <input style="float: left;"  type="button" value="Cancel" onclick="parent.location='/cancel/{{game}}'">
         </form>
                 {%if flag == 2%}
                     <p> </p>

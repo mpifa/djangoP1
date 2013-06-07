@@ -64,22 +64,3 @@ class asgnGameTypeOfGameForm(ModelForm):
         self.fields['Type'].empty_label = None
     class Meta:
         model=BelongsTo
-
-
-
-#        
-#class editGameForm(ModelForm):
-#    def __init__(self,user,*args,**kwrds):
-#        super(editGameForm,self).__init__(*args,**kwrds)
-#                
-#        #self.fields['user'].empty_label= None
-#        #self.fields['user'].queryset = User.objects.filter(username=user)
-#        #
-#        #self.fields['game'].empty_label= None
-#        #self.fields['game'].queryset = Game.objects.filter(name=gm)
-#        #
-#        #self.fields['platform'].empty_label= None
-#        #self.fields['platform'].queryset = Platform.objects.filter(name=pform)
-#        #
-#    class Meta:
-#        model=Game

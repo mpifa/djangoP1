@@ -350,3 +350,20 @@ def asgnTypeOfGame(request,game):
     else:
         form = asgnGameTypeOfGameForm(game)
     return render(request,'comment.html',{'form':form,'game':game,'path':"/addGameToPlat/"+game,'path2':current,'action':'CREATE GAME','flag':2,'method':'REPOST','tag':'Next'})
+
+
+def cancelGame(request,game):
+    try:
+        gm = Game.objects.get(name=game)
+        sup = SupportedBy.objects.all().filter(game = gm)
+        bel = BelongsTo.objects.all().filter(game = gm)
+
+        if gm is not None:
+            gm.delete()
+        if sup is not None:
+            sup.delete()
+        if bel is not None:
+            bel.delete()
+        return HttpResponseRedirect('/')
+    except:
+        return HttpResponseRedirect('/')
