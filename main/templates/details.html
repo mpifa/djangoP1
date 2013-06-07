@@ -1,27 +1,28 @@
-        {% extends "main.html" %}
-        {% block head%}
+{% extends "main.html" %}
+    {% block head%}
         <title>GamesDB - {{name}}</title>
-        {% endblock %}
-        {% block content %}
+    {% endblock %}
+    {% block content %}
         <span   vocab="http://schema.org/"    typeof="CreativeWork">  
           <h1> 
             {{pageTitle}} <span property="name">{{name}}</span> 
           </h1>
-          <p>DATE: &nbsp <span property="Date_creation">{{date}}</span></p>  
-            <p>TYPE:&nbsp
+          <!-- GAME DATA--> 
+          <p >DATE: &nbsp <span property="dateCreated">{{date}}</span></p>  
+            <p >TYPE:&nbsp
                 {%for t in type%}
-                <span property="Game_Type" content={{t}}></span>
+                <span property="applicationSubCategory" content={{t}}></span>
                 <a href=/type/{{t}}> {{t}}</a>&nbsp
                 {%endfor%}
             </p>
             <p>PLATFORM:&nbsp
                 {%for p in platform%} 
-                <span property="Game_Platform" content={{p|cut:" "}}></span>{{p}}&nbsp
+                    {{p}}&nbsp
                 {%endfor%}
-            </p><span property="Game_Company" content={{company|cut:" "}}></span>
+             <span property="device" content={{platform|join:","|cut:" "}}></span>
+            </p><span property="creator" content={{company|cut:" "}}></span>
             <p>PUBLISHER:&nbsp <a href=/company/{{company|urlencode}}> {{company}}</span></a></p>
             
-
             <div span style="margin-left:0cm" property="aggregateRating" typeof="AggregateRating">
                 RATING:
                 [ <span property="ratingValue">{{average|stringformat:".1f"}}</span>
@@ -31,12 +32,14 @@
 
             <p></p>
             <hr style="width: 830px; float: left; margin-left: 32px"></hr>
+
+            <!-- REVIEWS -->
             <p><h3>{{COMMENTS}}</h3></p>
             {% for x in reviews %}
-            <p span rel="Review" typeof="User_Review">#
-                <span property="ID">{{x.id}}</span>
-                <span property="USER"> {{x.user}}</span>  
-                {{x.date}}
+            <p span rel="review" typeof="Review">#
+                <span property="id">{{x.id}}</span>
+                <span property="author"> {{x.user}}</span>  
+                <span property="datePublisher">{{x.date}}</span>
                 {% if user.username == x.user%}
                     <INPUT  style="float: right; margin-right: 40px" VALUE= "EDIT" type="button" onClick="parent.location='/review/edit{{path}}/{{x.Rid}}'"></input>
                     <INPUT style="float: right" VALUE= "DELETE" type="button" onClick="parent.location='/review/delete{{path}}/{{x.Rid}}'"></input>
@@ -46,15 +49,15 @@
                     <span property="bestRating" content="5"></span>
                     <br>Rate: [ <span property="ratingValue">{{x.rate}}</span>/5 ]
                 </span>
-                    <br><span property="COMMENT">{{x.Comment}}</span>
-                    <br>From : [<span property="FROM">{{x.city}}</span>]
+                    <br><span property="reviewBody">{{x.Comment}}</span>
+                    <br>From : [<span property="homeLocation">{{x.city}}</span>]
 
                 <hr style="width: 830px; float: left; margin-left: 32px"> </hr>
 
             {% endfor %}
 
             </p>
-            <FORM>
-                <INPUT VALUE= "ADD REVIEW" type="button" onClick="parent.location='/review/add{{path}}'">
-            </FORM>
+        <FORM>
+            <INPUT VALUE= "ADD REVIEW" type="button" onClick="parent.location='/review/add{{path}}'">
+        </FORM>
 {% endblock content %}

@@ -1,64 +1,62 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-{% load staticfiles %}
-
-{% block head%}{%endblock%}
-<title>{{titleHead}}</title>
-<link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}" />
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
+    {% load staticfiles %}
+    {% block head%}{%endblock%}
+    <title>{{titleHead}}</title>
+    <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}" />
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
 
 </head>
 <body>
     
-<div id="wrap">
-    <div class="header">
-        <div class="logo"></div> 
-    <div id="menu">
-        <ul> 
-            <li class="selected"><a href="/">Home</a></li>
-            <li class="divider"></li>
-            <li class="selected"><a href="/PC">PC</a></li>
-            <li class="divider"></li>
-            <li class="selected"><a href="/Xbox 360">XBOX360</a></li>
-            <li class="divider"></li>
-            <li class="selected"><a href="/PlayStation 3">PS3</a></li>
-            <li class="divider"></li>
-            <li class="selected"><a href="/Wii">Wii</a></li>
-            <li class="divider"></li>
-            <li class="selected"><a href="/PSP">PSP</a></li>
-            <li class="divider"></li>
-            <li class="selected"><a href="/Nintendo DS">NDS</a></li>
-            <li class="divider"></li>
-            <li class="selected"><a href="/Mobile">MOBILE</a></li>
-            <li class="divider"></li>
-            <li class="selected"><a href="/admin">ADMIN</a></li>
-            <li class="divider"></li>
-            <li class="selected">{% if user.username %}
-                                    <a href="/logout/">Logout</a>
-                                    {% else %}
-                                    <a href="/login">Log in</a>
-                                    <a href="/register">Register</a>
-                                    {% endif %}</li>
-            <li class=selected"><a href="">Welcome {{ user }}</a></li>
-        </ul>
-    </div> 
+    <div id="wrap">
+        <div class="header">
+            <div class="logo"></div> 
+        <div id="menu">
+            <ul> 
+                <li class="selected"><a href="/">Home</a></li>
+                <li class="divider"></li>
+                <li class="selected"><a href="/PC">PC</a></li>
+                <li class="divider"></li>
+                <li class="selected"><a href="/Xbox 360">XBOX360</a></li>
+                <li class="divider"></li>
+                <li class="selected"><a href="/PlayStation 3">PS3</a></li>
+                <li class="divider"></li>
+                <li class="selected"><a href="/Wii">Wii</a></li>
+                <li class="divider"></li>
+                <li class="selected"><a href="/PSP">PSP</a></li>
+                <li class="divider"></li>
+                <li class="selected"><a href="/Nintendo DS">NDS</a></li>
+                <li class="divider"></li>
+                <li class="selected"><a href="/Mobile">MOBILE</a></li>
+                <li class="divider"></li>
+                <li class="selected"><a href="/admin">ADMIN</a></li>
+                <li class="divider"></li>
+                <li class="selected">{% if user.username %}
+                                        <a href="/logout/">Logout</a>
+                                        {% else %}
+                                        <a href="/login">Log in</a>
+                                        <a href="/register">Register</a>
+                                        {% endif %}</li>
+                <li ><a href="">Welcome {{ user }}</a></li>
+            </ul>
+        </div> 
 
-</div>
-    <div class="center_content">
-    <h2>{{pagetitle}}</h2>
-    
-            {% if user.is_authenticated %}
-                {% block content %}{% endblock %}
-            {%else%}
-                {% block contents %}{% endblock %}
-            {% endif %}
+    </div>
+        <div class="center_content">
+        <h2>{{pagetitle}}</h2>
+                {% if user.is_authenticated %}
+                    {% block content %}{% endblock %}
+                {%else%}
+                    {% block contents %}{% endblock %}
+                {% endif %}
 
-    <p></p>
-    </div>    
-     <div class="clear">
         <p></p>
-     </div>
-</div>
+        </div>    
+         <div class="clear">
+            <p></p>
+         </div>
+    </div>
 </body>
 </html>
