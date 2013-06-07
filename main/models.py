@@ -15,7 +15,8 @@ class Company(models.Model):
 
 class Platform(models.Model):
     Types=(
-        ('PlayStation 3','PlayStation 3'),('Xbox 360','Xbox 360'),('PC','PC'),('Nintendo DS','Nintendo DS'),('Mobile','Mobile'),('PSP','PSP'),
+        ('PlayStation 3','PlayStation 3'),('Xbox 360','Xbox 360'),
+        ('PC','PC'),('Nintendo DS','Nintendo DS'),('Mobile','Mobile'),('PSP','PSP'),('Wii','Wii')
     )
     releaseDate = models.DateField(default=date.today)
     name = models.CharField(max_length=100,choices=Types,unique=True,primary_key=True)
